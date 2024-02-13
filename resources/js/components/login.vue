@@ -57,9 +57,9 @@ export default {
       if (response.data.error) {
         $("#alert").removeClass("alert-success").addClass("alert-danger").html(response.data.error);
       }else
-      if (response.data) {
-        console.log(response.data)
-        // $("#alert").removeClass("alert-danger").addClass("alert-success").html(response.data.success);
+      if (response.data.success) {
+       
+        $("#alert").removeClass("alert-danger").addClass("alert-success").html(response.data.success);
       } 
     })
     .catch(error => {
