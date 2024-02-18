@@ -1,8 +1,10 @@
 <?php
 
+use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Auth\AuthController;
+// use App\Http\Controllers\Auth\AuthController;
+use App\Http\Controllers\API\AuthController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -14,7 +16,15 @@ use App\Http\Controllers\Auth\AuthController;
 |
 */
 
- 
-Route::post('/login',[AuthController::class , 'login']);
-Route::post('/register',[AuthController::class , 'register']);
 
+Route::controller(AuthController::class)->group(function () {
+    Route::post('login', 'login');
+    Route::post('register', 'register');
+    Route::post('logout', 'logout');
+    Route::post('refresh', 'refresh');
+});
+
+
+Route::middleware(['auth'])->group(function () {
+    Route::get('admin/users', [UserController::class, 'index']);
+});
