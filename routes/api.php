@@ -25,6 +25,9 @@ Route::controller(AuthController::class)->group(function () {
 });
 
 
-Route::middleware(['auth'])->group(function () {
+ 
+Route::group(['middleware' => ['auth','role:super admin']], function () {
+
     Route::get('admin/users', [UserController::class, 'index']);
+    //
 });
