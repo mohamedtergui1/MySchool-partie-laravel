@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\API;
+namespace App\Http\Controllers\Api\Auth;
 
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -24,7 +24,7 @@ class AuthController extends Controller
         ]);
         $credentials = $request->only('email', 'password');
         $token = Auth::attempt($credentials);
-        
+
         if (!$token) {
             return response()->json([
                 'message' => 'Unauthorized',
@@ -33,24 +33,31 @@ class AuthController extends Controller
 
         $user = Auth::user();
         return response()->json([
-            'user' => $user,
-            'authorization' => [
-                'token' => $token,
-                'type' => 'bearer',
+            'status' => true,
+            'message' => 'User login successfully',
+            'data' => [
+                "user" => $user
+                ,
+                'authorization' => [
+                    'token' => $token,
+                    'type' => 'bearer',
+                ]
             ]
-        ]);
+        ], 200);
     }
 
     public function register(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'name' => 'required|string|alpha|max:255',
+            'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:6',
         ]);
-    
+
         if ($validator->fails()) {
             return response()->json([
+                "status" => false
+                ,
                 'error' => $validator->errors()->all()
             ], 400);
         }
@@ -60,10 +67,34 @@ class AuthController extends Controller
             'email' => $request->email,
             'password' => Hash::make($request->password),
         ]);
-    
+        $user->assignRole("student");
+
+
+
+        $credentials = $request->only('email', 'password');
+        $token = Auth::attempt($credentials);
+
+        if (!$token) {
+            return response()->json([
+                'message' => 'Unauthorized',
+            ], 401);
+        }
+
+        $user = Auth::user();
+
+
+
         return response()->json([
+            'status' => true,
             'message' => 'User created successfully',
-            'user' => $user
+            'data' => [
+                "user" => $user
+                ,
+                'authorization' => [
+                    'token' => $token,
+                    'type' => 'bearer',
+                ]
+            ]
         ], 201);
     }
 
@@ -71,6 +102,7 @@ class AuthController extends Controller
     {
         Auth::logout();
         return response()->json([
+            "status" => true ,
             'message' => 'Successfully logged out',
         ]);
     }

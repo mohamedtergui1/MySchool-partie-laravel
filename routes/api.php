@@ -1,11 +1,11 @@
 <?php
 
-use App\Http\Controllers\UserController;
+use App\Http\Controllers\Api\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-// use App\Http\Controllers\Auth\AuthController;
-use App\Http\Controllers\API\AuthController;
-/*
+use App\Http\Controllers\Api\Auth\AuthController;
+
+/* 
 |--------------------------------------------------------------------------
 | API Routes
 |--------------------------------------------------------------------------
@@ -23,11 +23,12 @@ Route::controller(AuthController::class)->group(function () {
     Route::post('logout', 'logout');
     Route::post('refresh', 'refresh');
 });
-
+ 
 
  
 Route::group(['middleware' => ['auth','role:super admin']], function () {
 
-    Route::get('admin/users', [UserController::class, 'index']);
+    Route::apiResource("admin/users",UserController::class);
+   
     //
 });

@@ -12,7 +12,7 @@ use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable implements JWTSubject
 {
-    use HasApiTokens, HasFactory, Notifiable,HasRoles;
+    use HasApiTokens, HasFactory, Notifiable, HasRoles;
 
     /**
      * The attributes that are mass assignable.
@@ -23,6 +23,10 @@ class User extends Authenticatable implements JWTSubject
         'name',
         'email',
         'password',
+        'firstName',
+        'lastName',
+        'level_id',
+        'speciality'
     ];
 
     /**
@@ -62,5 +66,17 @@ class User extends Authenticatable implements JWTSubject
     public function getJWTCustomClaims()
     {
         return [];
+    }
+    function absenses()
+    {
+        return $this->hasMany(Absense::class);
+    }
+    function activities()
+    {
+        return $this->hasMany(Activity::class);
+    }
+    function exams()
+    {
+        return $this->hasMany(Activity::class);
     }
 }
