@@ -26,15 +26,14 @@ class ClassroomRepository
     {
         return Classroom::find($id);
     }
-    public function getByUserId(int $id)
-    {
-        return Classroom::where("user_id", $id)->get();
-    }
-
+     
 
 
     public function getAll()
     {
         return Classroom::all();
+    }
+    public function paginate(int $Nrows){
+        return Classroom::paginate($Nrows);
     }
 }

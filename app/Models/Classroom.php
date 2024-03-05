@@ -15,6 +15,9 @@ class Classroom extends Model
         "quantity",
         "period"
     ];
+    function students(){
+        $this->belongsToMany(User::class,"user_classroom");
+    }
     function equipments(){
         return $this->hasMany(Equipment::class);
     }
