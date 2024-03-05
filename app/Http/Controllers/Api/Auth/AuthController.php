@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Api\Auth;
 
-use App\Models\User;
+use App\Repositories\UserRepositoryInterface;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
@@ -11,8 +11,11 @@ use Illuminate\Support\Facades\Validator;
 
 class AuthController extends Controller
 {
-    public function __construct()
+    protected $userRepository;
+
+    public function __construct(UserRepositoryInterface $userRepository)
     {
+        $this->userRepository = $userRepository;
         $this->middleware('auth:api', ['except' => ['login', 'register']]);
     }
 
@@ -36,8 +39,7 @@ class AuthController extends Controller
             'status' => true,
             'message' => 'User login successfully',
             'data' => [
-                "user" => $user
-                ,
+                "user" => $user,
                 'authorization' => [
                     'token' => $token,
                     'type' => 'bearer',
@@ -56,20 +58,17 @@ class AuthController extends Controller
 
         if ($validator->fails()) {
             return response()->json([
-                "status" => false
-                ,
+                "status" => false,
                 'error' => $validator->errors()->all()
             ], 400);
         }
 
-        $user = User::create([
+        $user = $this->userRepository->create([
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
         ]);
         $user->assignRole("student");
-
-
 
         $credentials = $request->only('email', 'password');
         $token = Auth::attempt($credentials);
@@ -82,14 +81,11 @@ class AuthController extends Controller
 
         $user = Auth::user();
 
-
-
         return response()->json([
             'status' => true,
             'message' => 'User created successfully',
             'data' => [
-                "user" => $user
-                ,
+                "user" => $user,
                 'authorization' => [
                     'token' => $token,
                     'type' => 'bearer',
@@ -118,4 +114,3 @@ class AuthController extends Controller
         ]);
     }
 }
-
