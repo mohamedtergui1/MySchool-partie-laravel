@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Repositories\ClassroomRepository;
+use App\Providers\ClassroomRepositoryInterface;
 use Illuminate\Http\Request;
 
 class ClassroomController extends Controller
@@ -12,7 +12,7 @@ class ClassroomController extends Controller
      * Display a listing of the resource.
      */
     private $repository;
-    function __construct(ClassroomRepository $repository){
+    function __construct(ClassroomRepositoryInterface $repository){
           $this->repository = $repository;
     }
     public function index()
@@ -31,10 +31,7 @@ class ClassroomController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
-    {
-        //
-    }
+    
 
     /**
      * Store a newly created resource in storage.

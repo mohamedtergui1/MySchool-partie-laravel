@@ -23,12 +23,12 @@ Route::controller(AuthController::class)->group(function () {
     Route::post('logout', 'logout');
     Route::post('refresh', 'refresh');
 });
+
+
+ 
  
 
  
 Route::group(['middleware' => ['auth','role:super admin']], function () {
-
-    Route::apiResource("admin/users",UserController::class);
-   
-    //
+    Route::apiResource("admin/users",UserController::class);    
 });

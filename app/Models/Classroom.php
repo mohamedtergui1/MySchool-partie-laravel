@@ -10,18 +10,21 @@ class Classroom extends Model
     use HasFactory;
     protected $fillable = [
         'name',
-        'prof_id',
-        'level_id',
+        'teatcher_id',
+        'grade_id',
         "quantity",
-        "period"
+        "promo"
     ];
     function students(){
-        $this->belongsToMany(User::class,"user_classroom");
+        $this->belongsToMany(User::class,"scholasticyears");
     }
-    function equipments(){
-        return $this->hasMany(Equipment::class);
+    function teatcher(){
+        return $this->belongsTo(User::class,"teatcher_id");
     }
-    function exams(){
-        return $this->hasMany(Exam::class);
+    function promo(){
+        return $this->belongsTo(Promo::class );
+    }
+    function grade(){
+        return $this->belongsTo(Grade::class );
     }
 }
