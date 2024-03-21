@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string("name");
             $table->foreignId("promo_id")->constrained("promos");
             $table->foreignId("grade_id")->constrained("grades");
-            $table->foreignId("teatcher_id")->constrained("users");
+            $table->foreignId("teacher_id")->constrained("users");
             $table->timestamps();
         });
     }

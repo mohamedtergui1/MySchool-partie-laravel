@@ -1,5 +1,7 @@
 <?php 
-namespace App\Providers;
+namespace App\Repositories;
+
+use App\Models\Classroom;
 
 interface ClassroomRepositoryInterface{
     public function create(array $data);
