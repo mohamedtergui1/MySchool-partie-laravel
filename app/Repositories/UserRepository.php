@@ -29,14 +29,15 @@ class UserRepository implements UserRepositoryInterface
     }
     public function getByEmail(string $email)
     {
-        return User::where("email",$email)->firstOrFail();
+        return User::where("email", $email)->firstOrFail();
     }
 
     public function getAll()
     {
         return User::all();
     }
-    public function paginate(int $Nrows){
-        return User::paginate($Nrows);
+    public function paginate(int $Nrows)
+    {
+        return User::latest()->paginate($Nrows);
     }
 }

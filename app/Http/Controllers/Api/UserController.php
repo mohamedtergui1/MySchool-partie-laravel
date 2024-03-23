@@ -61,7 +61,7 @@ class UserController extends Controller
                 "status" => true
                 ,
                 'data' => [
-                    'users' => $user
+                    'user' => $user
                 ]
                 ,
                 "message" => "users created successfully"
@@ -79,7 +79,7 @@ class UserController extends Controller
                     "status" => true
                     ,
                     'data' => [
-                        'users' => $user
+                        'user' => $user
                     ]
                     ,
                     "message" => "user created successfully"
