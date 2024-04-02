@@ -24,7 +24,9 @@ class LossonsRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            "name" => ["required","string","max:255"]
+            ,
+            "course_file" =>   ["required"]
         ];
     }
     protected function failedValidation(Validator $validator)

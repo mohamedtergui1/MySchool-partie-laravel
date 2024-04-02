@@ -29,23 +29,21 @@ class AuthController extends Controller
         $token = Auth::attempt($credentials);
 
         if (!$token) {
-            return response()->json([
-                'message' => 'Unauthorized',
-            ], 401);
+            return $this->failed([], 'Unauthorized', 401);
         }
 
         $user = Auth::user();
-        return response()->json([
-            'status' => true,
-            'message' => 'User login successfully',
-            'data' => [
-                "user" => $user,
-                'authorization' => [
-                    'token' => $token,
-                    'type' => 'bearer',
-                ]
+        $role = $user->getRoleNames()->first();
+        unset($user->roles);
+        $responseData = [
+            "user" => $user,
+            'authorization' => [
+                'token' => $token,
+                'type' => 'bearer',
+                'role' => $role
             ]
-        ], 200);
+        ];
+        return $this->success($responseData, 'User login successfully');
     }
 
     public function register(Request $request)
@@ -57,10 +55,7 @@ class AuthController extends Controller
         ]);
 
         if ($validator->fails()) {
-            return response()->json([
-                "status" => false,
-                'error' => $validator->errors()->all()
-            ], 400);
+            return $this->failed($validator->errors()->all(), 'Validation failed', 400);
         }
 
         $user = $this->userRepository->create([
@@ -68,49 +63,55 @@ class AuthController extends Controller
             'email' => $request->email,
             'password' => Hash::make($request->password),
         ])->assignRole("student");
-      
+
 
         $credentials = $request->only('email', 'password');
         $token = Auth::attempt($credentials);
 
         if (!$token) {
-            return response()->json([
-                'message' => 'Unauthorized',
-            ], 401);
+            return $this->failed([], 'Unauthorized', 401);
         }
 
         $user = Auth::user();
-
-        return response()->json([
-            'status' => true,
-            'message' => 'User created successfully',
-            'data' => [
-                "user" => $user,
-                'authorization' => [
-                    'token' => $token,
-                    'type' => 'bearer',
-                ]
+        $role = $user->getRoleNames()->first();
+        unset($user->roles);
+        $responseData = [
+            "user" => $user,
+            'authorization' => [
+                'token' => $token,
+                'type' => 'bearer',
+                'role' => $role
             ]
-        ], 201);
+        ];
+
+
+        return $this->success($responseData, 'User registred successfully', 201);
     }
 
     public function logout()
     {
         Auth::logout();
-        return response()->json([
-            "status" => true,
-            'message' => 'Successfully logged out',
-        ]);
+        return $this->success([], 'Successfully logged out');
     }
 
     public function refresh()
     {
-        return response()->json([
-            'user' => Auth::user(),
-            'authorisation' => [
-                'token' => Auth::refresh(),
+
+        $user = Auth::user();
+
+
+        $refreshedToken = Auth::refresh();
+
+
+        $responseData = [
+            'user' => $user,
+            'authorization' => [
+                'token' => $refreshedToken,
                 'type' => 'bearer',
             ]
-        ]);
+        ];
+
+
+        return $this->success($responseData);
     }
 }

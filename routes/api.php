@@ -2,7 +2,7 @@
 
 use App\Http\Controllers\Api\ClassroomController;
 use App\Http\Controllers\Api\UserController;
-use Illuminate\Http\Request;
+use App\Http\Controllers\LossonsController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\Auth\AuthController;
 
@@ -30,9 +30,11 @@ Route::controller(AuthController::class)->group(function () {
  
 
  
-Route::group(['middleware' => ['auth','role:super admin']], function () {
+Route::group(['middleware' => ['auth','role:admin']], function () {
     Route::apiResource("admin/users",UserController::class);  
     Route::apiResource("admin/classrooms",ClassroomController::class);  
-
-
+});
+ 
+Route::group(['middleware' => ['auth','role:admin']], function () {
+    Route::apiResource("teacher/lossons",LossonsController::class);  
 });

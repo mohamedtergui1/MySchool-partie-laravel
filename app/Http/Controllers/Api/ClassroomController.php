@@ -14,8 +14,9 @@ class ClassroomController extends Controller
      * Display a listing of the resource.
      */
     private $repository;
-    function __construct(ClassroomRepositoryInterface $repository){
-          $this->repository = $repository;
+    function __construct(ClassroomRepositoryInterface $repository)
+    {
+        $this->repository = $repository;
     }
     public function index()
     {
@@ -33,7 +34,7 @@ class ClassroomController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    
+
 
     /**
      * Store a newly created resource in storage.
@@ -41,12 +42,12 @@ class ClassroomController extends Controller
     public function store(ClassroomRequest $request)
     {
         //
-      
+
         return response()->json(
             [
                 "status" => true
                 ,
-                'data' => ['user' =>  $this->repository->create($request->all())]
+                'data' => ['user' => $this->repository->create($request->all())]
                 ,
                 "message" => "message created successfuly"
             ]
@@ -79,7 +80,7 @@ class ClassroomController extends Controller
             [
                 "status" => true
                 ,
-                'data' => ['user' =>  $this->repository->update($Classroom,$request->all())]
+                'data' => ['user' => $this->repository->update($Classroom, $request->all())]
                 ,
                 "message" => "message updated successfuly"
             ]

@@ -23,7 +23,7 @@ class DatabaseSeeder extends Seeder
 
         try {
 
-            $roles = ["super admin", "admin", "teacher", "student"];
+            $roles = [  "admin", "teacher", "student"];
             foreach ($roles as $role) {
                 Role::create(['name' => $role]);
             }
@@ -37,7 +37,7 @@ class DatabaseSeeder extends Seeder
                 'name' => 'admin',
                 'email' => 'admin@admin.com',
                 'password' => Hash::make('admin')
-            ])->assignRole("super admin");
+            ])->assignRole("admin");
             User::create([
                 'name' => 'teacher',
                 'email' => 'teacher@teacher.com',

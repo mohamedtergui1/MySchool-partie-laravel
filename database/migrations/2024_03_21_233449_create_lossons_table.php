@@ -13,6 +13,9 @@ return new class extends Migration
     {
         Schema::create('lossons', function (Blueprint $table) {
             $table->id();
+            $table->string("course_file")->nullable();
+            $table->string("name");
+            $table->foreignId("classroom_id")->constrained("classrooms");
             $table->timestamps();
         });
     }
