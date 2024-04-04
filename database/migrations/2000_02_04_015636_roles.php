@@ -10,10 +10,9 @@ return new class extends Migration {
      */
     public function up(): void
     {
-        Schema::create('promos', function (Blueprint $table) {
+        Schema::create('roles', function (Blueprint $table) {
             $table->id();
-            $table->string("year");
-            $table->boolean("TheCurrent")->default(true);
+            $table->string("name");
             $table->timestamps();
         });
     }
@@ -23,7 +22,7 @@ return new class extends Migration {
      */
     public function down(): void
     {
-        Schema::dropIfExists('promos');
+        Schema::dropIfExists('roles');
     }
 
 };

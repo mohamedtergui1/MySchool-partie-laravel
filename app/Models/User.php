@@ -4,15 +4,14 @@ namespace App\Models;
 
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Notifications\Notifiable;
-use Illuminate\Contracts\Auth\MustVerifyEmail;
 use PHPOpenSourceSaver\JWTAuth\Contracts\JWTSubject;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Spatie\Permission\Traits\HasRoles;
+ 
 
 class User extends Authenticatable implements JWTSubject
 {
-    use HasApiTokens, HasFactory, Notifiable, HasRoles;
+    use HasApiTokens, HasFactory, Notifiable;
 
     /**
      * The attributes that are mass assignable.
@@ -20,14 +19,19 @@ class User extends Authenticatable implements JWTSubject
      * @var array<int, string>
      */
     protected $fillable = [
-        'name',
+        'username',
+        'role_id',
         'email',
         'password',
         'firstName',
         'lastName',
-        'level_id',
-        'speciality'
+        'grade_id',
+        'address',
+        'number_phone',
+        'date_d_inscription',
+        
     ];
+
 
     /**
      * The attributes that should be hidden for serialization.
@@ -57,7 +61,9 @@ class User extends Authenticatable implements JWTSubject
     {
         return $this->getKey();
     }
-
+    function role(){  
+        return $this->belongsTo(Role::class);
+    }
     /**
      * Return a key value array, containing any custom claims to be added to the JWT.
      *
@@ -67,13 +73,15 @@ class User extends Authenticatable implements JWTSubject
     {
         return [];
     }
-   
-    function classrooms(){
-        return  $this->belongsToMany(Classroom::class,"scholasticyears","student_id","classroom_id" );
+
+    function classrooms()
+    {
+        return $this->belongsToMany(Classroom::class, "scholasticyears", "student_id", "classroom_id");
     }
 
-    function teacherClassroom(){
-        return $this->hasMany(Classroom::class , "teacher_id");
+    function teacherClassroom()
+    {
+        return $this->hasMany(Classroom::class, "teacher_id");
     }
 
 }

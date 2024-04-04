@@ -31,14 +31,14 @@ class UpdateStudentRequest extends FormRequest
             'lowercase',
             'email',
             'max:100',
-            Rule::unique(User::class)->ignore($userId )
+            Rule::unique(User::class)->ignore($userId)
         ];
 
         return [
-            'name' => ['required', 'string', 'max:100'],
+            'username' => ['required', 'string', 'max:100'],
             'email' => $emailRule,
             'password' => ['required', 'min:4'],
-            'role' => ['required', 'in:student,teacher']
+            'role_id' => ['required', 'in:2,3,1']
         ];
     }
 
@@ -47,7 +47,6 @@ class UpdateStudentRequest extends FormRequest
         throw new HttpResponseException(response()->json($validator->errors(), 422));
     }
 
-    
+
 }
 
- 

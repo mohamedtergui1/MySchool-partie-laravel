@@ -1,7 +1,7 @@
 <?php
 namespace App\Traits;
 trait  ResponseHelper{
-    function success(  array $data = [] ,string $message = ''  , int  $status  = 200){
+    function success(   $data = [] ,string $message = ''  , int  $status  = 200){
             return   response()->json([
             "status" => true 
             ,

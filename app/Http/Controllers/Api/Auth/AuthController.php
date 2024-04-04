@@ -33,14 +33,13 @@ class AuthController extends Controller
         }
 
         $user = Auth::user();
-        $role = $user->getRoleNames()->first();
-        unset($user->roles);
+         
         $responseData = [
             "user" => $user,
             'authorization' => [
                 'token' => $token,
                 'type' => 'bearer',
-                'role' => $role
+                'role' => $user->role_id
             ]
         ];
         return $this->success($responseData, 'User login successfully');
@@ -62,8 +61,8 @@ class AuthController extends Controller
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
-        ])->assignRole("student");
-
+            'role_id'  =>  1
+        ]);
 
         $credentials = $request->only('email', 'password');
         $token = Auth::attempt($credentials);

@@ -20,15 +20,7 @@ class ClassroomController extends Controller
     }
     public function index()
     {
-        return response()->json(
-            [
-                "status" => true
-                ,
-                'data' => ['user' => $this->repository->paginate(5)]
-                ,
-                "message" => "message loadeing successfuly"
-            ]
-        );
+        return $this->success($this->repository->paginate(5));
     }
 
     /**
@@ -94,14 +86,6 @@ class ClassroomController extends Controller
     {
         //
         $this->repository->delete($Classroom);
-        return response()->json(
-            [
-                "status" => true
-                ,
-                'data' => []
-                ,
-                "message" => "message updated successfuly"
-            ]
-        );
+        return $this->success([], "Classroom deleted with success" );
     }
 }

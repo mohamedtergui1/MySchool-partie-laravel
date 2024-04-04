@@ -22,53 +22,30 @@ class UserController extends Controller
     public function index()
     {
         $users = $this->repository->paginate(5);
-        if ($users->count()) {
-            return response()->json(
-                [
-                    "status" => true
-                    ,
-                    'data' => [
-                        'users' => $users
-                    ]
-                    ,
-                    "message" => "users loading successfully"
-                ]
-                ,
-                200
-            );
-        } else {
-            return response()->json(
-                [
-                    "status" => false
-                    ,
-                    "message" => "no records found"
-                ]
-            );
-        }
-    }
-
-    public function store(StudentRequest $request)
-    {
-        $all = $request->all();
-        $role = $all["role"];
-        unset($all["role"]);
-        $user = $this->repository->create($all);
-
-        $user->assignRole($role);
 
         return response()->json(
             [
                 "status" => true
                 ,
                 'data' => [
-                    'user' => $user
+                    'users' => $users
                 ]
                 ,
-                "message" => "users created successfully"
+                "message" => "users loading successfully"
             ]
             ,
-            201
+            200
         );
+
+    }
+
+    public function store(StudentRequest $request)
+    {
+
+
+        $user = $this->repository->create($request->all());
+
+        return $this->success($user, "users created successfully", 201);
     }
     public function show(int $id)
     {
@@ -78,9 +55,8 @@ class UserController extends Controller
                 [
                     "status" => true
                     ,
-                    'data' => [
-                        'user' => $user
-                    ]
+                    'data' => $user
+
                     ,
                     "message" => "user created successfully"
                 ]
@@ -104,7 +80,7 @@ class UserController extends Controller
     public function update(Request $request, User $user)
     {
         $validator = Validator::make($request->all(), [
-            'name' => 'required|string|max:100',
+            'username' => 'required|string|max:100',
             'email' => [
                 'required',
                 'string',
@@ -114,7 +90,7 @@ class UserController extends Controller
                 Rule::unique('users')->ignore($user->id),
             ],
             'password' => 'required|min:4',
-            'role' => 'required|in:student,teacher',
+            'role_id' => 'required|in:1,2,3',
         ]);
         if ($validator->fails()) {
             return response()->json([
@@ -123,28 +99,18 @@ class UserController extends Controller
                 'message' => 'Validation errors occurred.'
             ], 422);
         }
-        $all = $request->all();
-        $role = $all["role"];
-        unset($all["role"]);
-        $user = $this->repository->update($user, $all);
-        $user->syncRoles([]);
-        $user->assignRole($role);
 
-        return response()->json(
-            [
-                "status" => true
-                ,
-                'data' => [
-                    'users' => $user
-                ]
-                ,
-                "message" => "users updated successfully"
-            ]
-            ,
-            201
-        );
+
+        $user = $this->repository->update($user, $request->all());
+
+        return $this->success($user, "users updated successfully");
     }
+    public function destroy(User $user)
+    {
+        $this->repository->delete($user);
 
+        return $this->success([], "user deleted whith success");
+    }
 
 
 }

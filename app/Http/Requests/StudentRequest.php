@@ -25,12 +25,18 @@ class StudentRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => ['required', 'string', 'max:100'],
+            // 'username' => ['required', 'string', 'max:100', 'unique:users,username'],
             'email' => ['required', 'string', 'lowercase', 'email', 'max:100', 'unique:users,email'],
             'password' => ['required', 'min:4'],
-            'role' => ['required', 'in:student,teacher']
+            'role_id' => ['required', 'in:1,2,3'],
+            'firstName' => 'required|string|max:255',
+            'lastName' => 'required|string|max:255',
+            'grade_id' => 'required|exists:grades,id',
+            'address' => 'required|string|max:255',
+            'number_phone' => 'required|string|max:20',
+            'date_d_inscription' => 'required|date'
         ];
-        
+
     }
 
     protected function failedValidation(Validator $validator)
@@ -38,7 +44,6 @@ class StudentRequest extends FormRequest
         throw new HttpResponseException(response()->json($validator->errors(), 422));
     }
 
-    
+
 }
 
- 
