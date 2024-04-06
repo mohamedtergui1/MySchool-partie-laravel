@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('scholasticyears', function (Blueprint $table) {
             $table->id();
-            $table->foreignId("student_id")->constrained("users");
-            $table->foreignId("classroom_id")->constrained("classrooms");
+            $table->foreignId("student_id")->constrained("users")->cascadeOnDelete();
+            $table->foreignId("classroom_id")->constrained("classrooms")->cascadeOnDelete();
             $table->enum("fin_result", ["pass","redubl"])->default(null);
             $table->timestamps();
         });

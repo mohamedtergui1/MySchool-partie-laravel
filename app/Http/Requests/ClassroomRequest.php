@@ -30,7 +30,7 @@ class ClassroomRequest extends FormRequest
             'teacher_id' => ['required', 'exists:users,id', new TeacherRole],
             'grade_id' => 'required|exists:grades,id',
             'promo_id' => 'required|exists:promos,id',
-            'student_ids' => ['required', 'array'],
+            'student_ids' => [ 'array'],
             'student_ids.*' => ['exists:users,id']
         ];
     }
