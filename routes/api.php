@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\ClassroomController;
+use App\Http\Controllers\Api\GradeController;
 use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\Api\PromoController;
 use Illuminate\Support\Facades\Route;
@@ -33,6 +34,7 @@ Route::controller(AuthController::class)->group(function () {
 Route::group(['middleware' => ['auth','role.check:admin']], function () {
     Route::apiResource("admin/users",UserController::class);
     Route::apiResource("admin/promos", PromoController::class);
+    Route::apiResource("admin/grades", GradeController::class);
 
     Route::apiResource("admin/classrooms",ClassroomController::class);  
 });

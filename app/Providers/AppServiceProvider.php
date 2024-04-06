@@ -5,6 +5,9 @@ namespace App\Providers;
  
 use App\Repositories\ClassroomRepository;
 use App\Repositories\ClassroomRepositoryInterface;
+use App\Repositories\GradeRepository;
+use App\Repositories\GradeRepositoryInterface;
+
 use App\Repositories\PromoRepository;
 use App\Repositories\PromoRepositoryInterface;
 use App\Repositories\LossonsRepository;
@@ -28,9 +31,11 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(ScholasticyearRepositoryInterface::class, ScholasticyearRepository::class);
         $this->app->bind(LossonsRepositoryInterface::class, LossonsRepository::class);
         $this->app->bind(PromoRepositoryInterface::class, PromoRepository::class);
- 
+        $this->app->bind(GradeRepositoryInterface::class, GradeRepository::class);
 
- 
+
+
+
     }
     
 

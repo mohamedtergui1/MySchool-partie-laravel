@@ -3,7 +3,7 @@
 namespace App\Rules;
 
 use Illuminate\Contracts\Validation\Rule;
-use Spatie\Permission\Models\Role;
+use App\Models\Role;
 use App\Models\User;
 
 class TeacherRole implements Rule
@@ -14,7 +14,7 @@ class TeacherRole implements Rule
         $teacherRole = Role::where('name', 'teacher')->first();
 
         // Check if the user with the specified ID has the teacher role
-        return User::find($value)->hasRole($teacherRole);
+        return User::find($value)->role->name == $teacherRole->name;
     }
 
     public function message()

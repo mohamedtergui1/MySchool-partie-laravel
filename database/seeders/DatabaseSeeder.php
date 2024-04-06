@@ -33,9 +33,8 @@ class DatabaseSeeder extends Seeder
                     "year" => $i . "/" . ($i + 1)
                 ]);
             }
-            $users = User::factory(30)->create();
-
-
+            
+            
             User::create([
                 'username' => 'admin',
                 'email' => 'admin@admin.com',
@@ -61,7 +60,8 @@ class DatabaseSeeder extends Seeder
                 'date_d_inscription' => now(),
                 'role_id' => 2
             ]);
-
+            
+            $users = User::factory(30)->create();
 
 
             // User::create([
