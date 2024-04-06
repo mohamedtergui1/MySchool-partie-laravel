@@ -18,9 +18,9 @@ class ClassroomController extends Controller
     {
         $this->repository = $repository;
     }
-    public function index()
+    public function index() 
     {
-        return $this->success($this->repository->paginate(5));
+        return $this->success($this->repository->paginate(10));
     }
 
     /**
@@ -34,16 +34,8 @@ class ClassroomController extends Controller
     public function store(ClassroomRequest $request)
     {
         //
-
-        return response()->json(
-            [
-                "status" => true
-                ,
-                'data' => ['user' => $this->repository->create($request->all())]
-                ,
-                "message" => "message created successfuly"
-            ]
-        );
+        return $this->success($this->repository->create($request->all()), "message created successfuly");
+         
     }
 
     /**
@@ -68,15 +60,9 @@ class ClassroomController extends Controller
     public function update(ClassroomRequest $request, Classroom $Classroom)
     {
         //
-        return response()->json(
-            [
-                "status" => true
-                ,
-                'data' => ['user' => $this->repository->update($Classroom, $request->all())]
-                ,
-                "message" => "message updated successfuly"
-            ]
-        );
+
+        return $this->success($this->repository->update($Classroom, $request->all()), "classroom updated successfuly");
+         
     }
 
     /**
