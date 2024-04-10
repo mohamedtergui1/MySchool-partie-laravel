@@ -19,6 +19,10 @@ class PromoController extends Controller
       return $this->success($this->repository->paginate(10));
    }
 
+   function indexAll(){
+      return $this->success($this->repository->getAll());
+   }
+
    function store(Request $request)
    {
       return $this->success($this->repository->create($request->all()), "promo added with success");

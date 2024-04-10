@@ -37,7 +37,6 @@ class UpdateStudentRequest extends FormRequest
         return [
             'username' => ['required', 'string', 'max:100'],
             'email' => $emailRule,
-            'password' => ['required', 'min:4'],
             'role_id' => ['required', 'in:2,3,1']
         ];
     }

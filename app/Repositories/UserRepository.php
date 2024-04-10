@@ -3,19 +3,23 @@
 namespace App\Repositories;
 
 use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 
 
 class UserRepository implements UserRepositoryInterface
 {
     public function create(array $data)
     {
-        return User::create($data);
+        $user = User::create($data);
+        $user->load("role", "grade");
+        return $user;
     }
 
-    public function update(User $User, array $data)
+    public function update(User $user, array $data)
     {
-        $User->update($data);
-        return $User;
+        $user->update($data);
+        $user->load("role", "grade");
+        return $user;
     }
 
     public function delete(User $User)
@@ -29,7 +33,7 @@ class UserRepository implements UserRepositoryInterface
     }
     public function getByEmail(string $email)
     {
-        return User::where("email", $email)->firstOrFail();
+        return User::where("email", $email)->first();
     }
 
     public function getAll()
@@ -38,6 +42,9 @@ class UserRepository implements UserRepositoryInterface
     }
     public function paginate(int $Nrows)
     {
-        return User::latest()->paginate($Nrows);
+        $users = User::latest()->where("id","<>",Auth::id())->where("role_id","<>","1")->paginate($Nrows);
+        $users->load("role", "grade");
+        return $users;
+
     }
 }

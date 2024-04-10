@@ -28,13 +28,27 @@ class DatabaseSeeder extends Seeder
             foreach ($roles as $role) {
                 Role::create(['name' => $role]);
             }
-            for ($i = 2010; $i < 2030; $i++) {
+            for ($i = 2010; $i < 2024; $i++) {
                 Promo::create([
                     "year" => $i . "/" . ($i + 1)
                 ]);
             }
-            
-            
+            $faker = Faker::create();
+            Grade::create([
+                "name" => $faker->sentence(2)
+            ]);
+
+            Grade::create([
+                "name" => $faker->sentence(2)
+            ]);
+
+            Grade::create([
+                "name" => $faker->sentence(2)
+            ]);
+
+            $users = User::factory(30)->create();
+
+
             User::create([
                 'username' => 'admin',
                 'email' => 'admin@admin.com',
@@ -60,30 +74,10 @@ class DatabaseSeeder extends Seeder
                 'date_d_inscription' => now(),
                 'role_id' => 2
             ]);
-            
-            $users = User::factory(30)->create();
-
-
-            // User::create([
-            //     'name' => 'teacher',
-            //     'email' => 'teacher@teacher.com',
-            //     'password' => Hash::make('teacher')
-            // ])->assignRole("teacher");
 
 
 
-            $faker = Faker::create();
-            Grade::create([
-                "name" => $faker->sentence(2)
-            ]);
 
-            Grade::create([
-                "name" => $faker->sentence(2)
-            ]);
-
-            Grade::create([
-                "name" => $faker->sentence(2)
-            ]);
 
 
             DB::commit();

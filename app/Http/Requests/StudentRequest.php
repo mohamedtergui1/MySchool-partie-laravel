@@ -27,8 +27,7 @@ class StudentRequest extends FormRequest
         return [
             // 'username' => ['required', 'string', 'max:100', 'unique:users,username'],
             'email' => ['required', 'string', 'lowercase', 'email', 'max:100', 'unique:users,email'],
-            'password' => ['required', 'min:4'],
-            'role_id' => ['required', 'in:1,2,3'],
+            'role_id' => [ 'in:3'],
             'firstName' => 'required|string|max:255',
             'lastName' => 'required|string|max:255',
             'grade_id' => 'required|exists:grades,id',

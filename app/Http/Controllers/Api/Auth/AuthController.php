@@ -9,6 +9,12 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
+use Carbon\Carbon;
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
+
+
 class AuthController extends Controller
 {
     protected $userRepository;
@@ -16,7 +22,7 @@ class AuthController extends Controller
     public function __construct(UserRepositoryInterface $userRepository)
     {
         $this->userRepository = $userRepository;
-        $this->middleware('auth:api', ['except' => ['login', 'register']]);
+        $this->middleware('auth:api', ['except' => ['login', 'register', 'forgot', 'reset']]);
     }
 
     public function login(Request $request)
@@ -33,7 +39,7 @@ class AuthController extends Controller
         }
 
         $user = Auth::user();
-         
+
         $responseData = [
             "user" => $user,
             'authorization' => [
@@ -61,7 +67,7 @@ class AuthController extends Controller
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
-            'role_id'  =>  1
+            'role_id' => 1
         ]);
 
         $credentials = $request->only('email', 'password');
@@ -113,4 +119,60 @@ class AuthController extends Controller
 
         return $this->success($responseData);
     }
+
+    public function forgot()
+    {
+        request()->validate(['email' => 'required|email|exists:users']);
+        $token = Str::random(64);
+
+        $email = request('email');
+        DB::table('password_reset_tokens')->where("email", $email)->delete();
+
+        DB::table('password_reset_tokens')->insert([
+            'email' => $email,
+            'token' => $token,
+            'created_at' => Carbon::now()
+        ]);
+
+        $credentials = [
+            'token' => $token,
+            'email' => $email
+        ];
+
+        Mail::send('email.forgetPassword', ['credentials' => $credentials], function ($message) use ($email) {
+            $message->to($email);
+            $message->subject('Reset Password');
+        });
+
+        return response()->json(['message' => 'check your email']);
+    }
+
+    public function reset()
+    {
+        request()->validate([
+            'password' => 'required|string|min:6'
+            // ,
+            // 'password_confirmation' => 'required'
+        ]);
+
+        $updatePassword = DB::table('password_reset_tokens')
+            ->where([
+                'email' => request('email'),
+                'token' => request('token')
+            ])
+            ->first();
+
+        if (!$updatePassword) {
+            return  $this->failed([], "Invalid token!") ; 
+        }
+
+        $user = $this->userRepository->getByEmail(request('email'))
+            ->update(['password' => Hash::make(request('password'))]);
+
+        DB::table('password_reset_tokens')->where('email', request('email'))->delete();
+
+        return $this->success('Your password has been changed!');
+    }
+
+
 }

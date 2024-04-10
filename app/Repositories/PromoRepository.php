@@ -28,10 +28,10 @@ class PromoRepository implements PromoRepositoryInterface
     }
     public function getAll()
     {
-        return Promo::all();
+        return Promo::orderByDesc("year")->get();
     }
     public function paginate(int $Nrows)
     {
-        return Promo::latest()->paginate($Nrows);
+        return Promo::orderByDesc("year")->paginate($Nrows);
     }
 }

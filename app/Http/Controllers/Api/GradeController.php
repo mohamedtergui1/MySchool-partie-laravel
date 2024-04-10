@@ -18,6 +18,10 @@ class GradeController extends Controller
     {
         return $this->success($this->repository->paginate(10));
     }
+    function indexAll()
+    {
+        return $this->success($this->repository->getAll());
+    }
 
     function store(Request $request)
     {

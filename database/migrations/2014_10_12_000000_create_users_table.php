@@ -14,9 +14,11 @@ return new class extends Migration {
             $table->id();
             $table->string('username')->unique();
             $table->string('email')->unique();
-            $table->string('password');
+            $table->string('password')->default('myschool');
             $table->string('firstName');
             $table->string('lastName');
+            $table->string('image')->nullable();
+            $table->enum('genre',["man","woman"])->default(null);
             $table->unsignedBigInteger('grade_id')->nullable();
             $table->string('address')->nullable();
             $table->string('number_phone')->nullable();

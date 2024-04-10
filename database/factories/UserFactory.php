@@ -31,7 +31,7 @@ class UserFactory extends Factory
             'remember_token' => Str::random(10),
             'firstName' => $this->faker->firstName,
             'lastName' => $this->faker->lastName,
-            'grade_id' => $this->faker->randomDigitNotNull,  
+            'grade_id' => rand(1,3),  
             'address' => $this->faker->address,
             'number_phone' => $this->faker->phoneNumber,
             'date_d_inscription' => $this->faker->date,

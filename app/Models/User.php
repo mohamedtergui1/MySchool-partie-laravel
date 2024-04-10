@@ -29,7 +29,8 @@ class User extends Authenticatable implements JWTSubject
         'address',
         'number_phone',
         'date_d_inscription',
-        
+        'genre',
+        'image'
     ];
 
 
@@ -63,6 +64,10 @@ class User extends Authenticatable implements JWTSubject
     }
     function role(){  
         return $this->belongsTo(Role::class);
+    }
+    function grade()
+    {
+        return $this->belongsTo(Grade::class);
     }
     /**
      * Return a key value array, containing any custom claims to be added to the JWT.

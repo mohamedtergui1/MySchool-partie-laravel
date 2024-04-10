@@ -2,7 +2,7 @@
 
 use App\Http\Controllers\Api\ClassroomController;
 use App\Http\Controllers\Api\GradeController;
-use App\Http\Controllers\Api\UserController;
+use App\Http\Controllers\Api\StudentController;
 use App\Http\Controllers\Api\PromoController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\Auth\AuthController;
@@ -18,6 +18,8 @@ use App\Http\Controllers\Api\Auth\AuthController;
 |
 */
 
+Route::post('/forgot-password', [AuthController::class, 'forgot']);
+Route::post('/reset-password', [AuthController::class, 'reset']);
 
 Route::controller(AuthController::class)->group(function () {
     Route::post('login', 'login');
@@ -27,18 +29,18 @@ Route::controller(AuthController::class)->group(function () {
 });
 
 
- 
- 
-
- 
-Route::group(['middleware' => ['auth','role.check:admin']], function () {
-    Route::apiResource("admin/users",UserController::class);
+Route::group(['middleware' => ['auth', 'role.check:admin']], function () {
+    Route::apiResource("admin/students", StudentController::class);
     Route::apiResource("admin/promos", PromoController::class);
-    Route::apiResource("admin/grades", GradeController::class);
+    Route::get("admin/allpromos", [PromoController::class, 'indexAll']);
 
-    Route::apiResource("admin/classrooms",ClassroomController::class);  
+    Route::apiResource("admin/grades", GradeController::class);
+    Route::get("admin/allgrades", [GradeController::class, 'indexAll']);
+
+
+    Route::apiResource("admin/classrooms", ClassroomController::class);
 });
- 
+
 // Route::group(['middleware' => ['auth','role.check:admin']], function () {
 //     // Route::apiResource("teacher/lossons",LossonsController::class);  
 // });

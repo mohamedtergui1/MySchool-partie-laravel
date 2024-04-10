@@ -11,7 +11,7 @@ use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Validator;
 
-class UserController extends Controller
+class StudentController extends Controller
 {
 
     private $repository;
@@ -21,30 +21,15 @@ class UserController extends Controller
     }
     public function index()
     {
-        $users = $this->repository->paginate(5);
 
-        return response()->json(
-            [
-                "status" => true
-                ,
-                'data' => [
-                    'users' => $users
-                ]
-                ,
-                "message" => "users loading successfully"
-            ]
-            ,
-            200
-        );
+        return $this->success($this->repository->paginate(10));
 
     }
 
     public function store(StudentRequest $request)
     {
 
-
-        $user = $this->repository->create($request->all());
-
+        $user = $this->repository->create($request->all()+["role_id" => 3]);
         return $this->success($user, "users created successfully", 201);
     }
     public function show(int $id)
@@ -89,8 +74,7 @@ class UserController extends Controller
                 'max:100',
                 Rule::unique('users')->ignore($user->id),
             ],
-            'password' => 'required|min:4',
-            'role_id' => 'required|in:1,2,3',
+            'role_id' => 'in:3',
         ]);
         if ($validator->fails()) {
             return response()->json([
