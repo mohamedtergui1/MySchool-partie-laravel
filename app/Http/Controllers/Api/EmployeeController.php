@@ -62,7 +62,7 @@ class StudentController extends Controller
 
 
 
-    public function update(Request $request,int $user)
+    public function update(Request $request, int $user)
     {
 
         $user = $this->repository->getById($user);
@@ -78,14 +78,14 @@ class StudentController extends Controller
             ]
 
             ,
-        
+
             'role_id' => 'in:3',
         ]);
         if ($validator->fails()) {
             return response()->json([
                 'status' => false,
                 'errors' => $validator->errors(),
-                'message' => "Validation errors occurred.{$user->id}" 
+                'message' => "Validation errors occurred.{$user->id}"
             ], 422);
         }
 
