@@ -23,6 +23,7 @@ class UserFactory extends Factory
      */
     public function definition(): array
     {
+        $userImage = ["adnan.jpg", "ayman.jpg", "bilal.jpg", "bolbola.jpg", "elaarab.jpg", "elkhaili.jpg", "elmorjani.jpg", "ghofran.jpg", "lhcen.jpg", "li9ama.jpg", "ossama.jpg", "smail.jpg", "soulaiman.jpg", "waheli.jpg", "wissal.jpg", "yassin.jpg", "yassirAit.jpg", "zaid.jpg", "zehra.jpg"];
         return [
             'username' => $this->faker->unique()->userName,
             'email' => $this->faker->unique()->safeEmail(),
@@ -35,7 +36,8 @@ class UserFactory extends Factory
             'address' => $this->faker->address,
             'number_phone' => $this->faker->phoneNumber,
             'date_d_inscription' => $this->faker->date,
-            'role_id' => 3
+            'role_id' => 3,
+            'image' => $userImage[rand(0, count($userImage) - 1)],
         ];
     }
 

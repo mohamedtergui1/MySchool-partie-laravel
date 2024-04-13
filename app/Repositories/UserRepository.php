@@ -36,13 +36,25 @@ class UserRepository implements UserRepositoryInterface
         return User::where("email", $email)->first();
     }
 
-    public function getAll()
+    public function getAll(array $role_id = null)
     {
-        return User::all();
+        if ($role_id)
+            $users = User::latest()->whereIn("role_id", $role_id)
+
+                ->get();
+        else
+            $users = User::latest()->get();
+        $users->load("role", "grade");
+        return $users;
     }
-    public function paginate(int $Nrows)
+    public function paginate(int $Nrows, array $role_id = null)
     {
-        $users = User::latest()->where("id","<>",Auth::id())->where("role_id","<>","1")->paginate($Nrows);
+        if ($role_id)
+            $users = User::latest()->where("id", "<>", Auth::id())->whereIn("role_id", $role_id)
+        
+           -> paginate($Nrows);
+        else
+            $users = User::latest()->where("id", "<>", Auth::id())->paginate($Nrows);
         $users->load("role", "grade");
         return $users;
 

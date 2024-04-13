@@ -22,15 +22,29 @@ class StudentController extends Controller
     public function index()
     {
 
-        return $this->success($this->repository->paginate(10));
+        return $this->success($this->repository->paginate(10,[3]));
 
+    }
+
+    function getStudents(){
+        return $this->success($this->repository->getAll([3]));
     }
 
     public function store(StudentRequest $request)
     {
 
-        $user = $this->repository->create($request->all() + ["role_id" => 3]);
-        return $this->success($user, "users created successfully", 201);
+
+       
+        if ($request->hasFile("image")) {
+            $file = $request->file('image');
+            $extension = $file->getClientOriginalExtension();
+            $fileName = time() . '.' . $extension;
+            $path = 'uploads/students/';
+            $file->move($path, $fileName);
+            $all["image"] = $fileName;
+        }   
+        $user = $this->repository->create($all);
+        return $this->success($user, "student created successfully", 201);
     }
     public function show(int $id)
     {
@@ -43,7 +57,7 @@ class StudentController extends Controller
                     'data' => $user
 
                     ,
-                    "message" => "user created successfully"
+                    "message" => "student created successfully"
                 ]
                 ,
                 201
@@ -65,6 +79,10 @@ class StudentController extends Controller
     public function update(Request $request,int $user)
     {
 
+
+
+      
+
         $user = $this->repository->getById($user);
         $validator = Validator::make($request->all(), [
             'username' => 'required|string|max:100',
@@ -85,21 +103,30 @@ class StudentController extends Controller
             return response()->json([
                 'status' => false,
                 'errors' => $validator->errors(),
-                'message' => "Validation errors occurred.{$user->id}" 
+                'message' => "Validation errors occurred." 
             ], 422);
         }
 
+        $all = $request->all();
 
-        $user = $this->repository->update($user, $request->all());
+        if ($request->hasFile("image")) {
+            $file = $request->file('image');
+            $extension = $file->getClientOriginalExtension();
+            $fileName = time() . '.' . $extension;
+            $path = 'uploads/students/';
+            $file->move($path, $fileName);
+            $all["image"] = $fileName;
+        }
 
-        return $this->success($user, "users updated successfully");
+        $user = $this->repository->update($user, $all);
+
+        return $this->success($user, "student updated successfully");
     }
-    public function destroy(User $user)
+    public function destroy(int $user)
     {
+        $user = $this->repository->getById($user);
         $this->repository->delete($user);
-
-        return $this->success([], "user deleted whith success");
+        return $this->success([], "student deleted whith success");
     }
-
 
 }

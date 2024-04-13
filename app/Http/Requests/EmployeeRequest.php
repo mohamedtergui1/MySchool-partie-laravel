@@ -14,7 +14,7 @@ class EmployeeRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -25,9 +25,9 @@ class EmployeeRequest extends FormRequest
     public function rules(): array
     {
         return [
-            // 'username' => ['required', 'string', 'max:100', 'unique:users,username'],
+            'username' => ['required', 'string', 'max:100', 'unique:users,username'],
             'email' => ['required', 'string', 'lowercase', 'email', 'max:100', 'unique:users,email'],
-            'role_id' => ['in:2'],
+            'role_id' => ['in:1,2'],
             'firstName' => 'required|string|max:255',
             'lastName' => 'required|string|max:255',
             'address' => 'required|string|max:255',

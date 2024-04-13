@@ -4,7 +4,10 @@ use App\Http\Controllers\Api\ClassroomController;
 use App\Http\Controllers\Api\GradeController;
 use App\Http\Controllers\Api\StudentController;
 use App\Http\Controllers\Api\PromoController;
-use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Api\EmployeeController;
+
+
+use Illuminate\Support\Facades\Route; 
 use App\Http\Controllers\Api\Auth\AuthController;
 
 /* 
@@ -31,6 +34,10 @@ Route::controller(AuthController::class)->group(function () {
 
 Route::group(['middleware' => ['auth', 'role.check:admin']], function () {
     Route::apiResource("admin/students", StudentController::class);
+    Route::apiResource("admin/employees",  EmployeeController::class );
+    Route::get("admin/allstudents", [StudentController::class, 'getStudents']);
+    Route::get("admin/allteachers", [EmployeeController::class, 'getTeachers']);
+
     Route::apiResource("admin/promos", PromoController::class);
     Route::get("admin/allpromos", [PromoController::class, 'indexAll']);
 

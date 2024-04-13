@@ -16,7 +16,7 @@ interface UserRepositoryInterface
 
     public function getByEmail(string $email);
 
-    public function getAll();
+    public function getAll(array $role_id = null);
 
-    public function paginate(int $Nrows);
+    public function paginate(int $Nrows, array $role_id = null);
 }
