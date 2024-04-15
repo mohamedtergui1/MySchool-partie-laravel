@@ -11,7 +11,6 @@ interface UserRepositoryInterface
     public function update(User $User, array $data);
 
     public function delete(User $User);
-
     public function getById(int $id);
 
     public function getByEmail(string $email);
@@ -19,4 +18,5 @@ interface UserRepositoryInterface
     public function getAll(array $role_id = null);
 
     public function paginate(int $Nrows, array $role_id = null);
+    public function getAvailableStudents(int $classId);
 }

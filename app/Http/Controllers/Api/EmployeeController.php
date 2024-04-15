@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\EmployeeRequest;
-
 use App\Repositories\UserRepository;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
@@ -12,7 +11,6 @@ use Illuminate\Support\Facades\Validator;
 
 class EmployeeController extends Controller
 {
-
     private $repository;
     function __construct(UserRepository $repository)
     {
@@ -20,18 +18,15 @@ class EmployeeController extends Controller
     }
     public function index()
     {
-
-        return $this->success($this->repository->paginate(10, [1,2]));
-
+        return $this->success($this->repository->paginate(10, [1, 2]));
     }
-    function getTeachers(){
+    function getTeachers()
+    {
         return $this->success($this->repository->getAll([2]));
     }
 
     public function store(EmployeeRequest $request)
     {
-
-
         $all = $request->all();
         if ($request->hasFile("image")) {
             $file = $request->file('image');
@@ -77,10 +72,6 @@ class EmployeeController extends Controller
     public function update(Request $request, int $user)
     {
 
-
-
-
-
         $user = $this->repository->getById($user);
         $validator = Validator::make($request->all(), [
             'username' => 'required|string|max:100',
@@ -125,6 +116,5 @@ class EmployeeController extends Controller
         $this->repository->delete($user);
         return $this->success([], "employee deleted whith success");
     }
-
 
 }

@@ -51,12 +51,22 @@ class UserRepository implements UserRepositoryInterface
     {
         if ($role_id)
             $users = User::latest()->where("id", "<>", Auth::id())->whereIn("role_id", $role_id)
-        
-           -> paginate($Nrows);
+
+                ->paginate($Nrows);
         else
             $users = User::latest()->where("id", "<>", Auth::id())->paginate($Nrows);
         $users->load("role", "grade");
         return $users;
 
     }
+
+    public function getAvailableStudents(int $classId)
+    {
+        $students = User::where("role_id",3)->whereDoesntHave("classrooms", function ($query) use ($classId) {
+            $query->where('classrooms.id', $classId); 
+        })->get();
+
+        return $students;
+    }
+
 }

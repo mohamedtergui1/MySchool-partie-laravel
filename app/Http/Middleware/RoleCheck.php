@@ -9,7 +9,7 @@ class RoleCheck
 {
     protected $roleName;
 
-    public function __construct($roleName = 'admin')
+    public function __construct($roleName = "admin" )
     {
         $this->roleName = $roleName;
     }

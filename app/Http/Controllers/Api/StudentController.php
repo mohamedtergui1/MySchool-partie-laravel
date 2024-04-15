@@ -128,5 +128,8 @@ class StudentController extends Controller
         $this->repository->delete($user);
         return $this->success([], "student deleted whith success");
     }
-
+    function getAvailableStudents(int $id)
+    {
+        return $this->success($this->repository->getAvailableStudents($id));
+    }
 }

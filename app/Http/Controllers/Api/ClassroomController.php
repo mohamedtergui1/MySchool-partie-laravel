@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\ClassroomRequest;
 use App\Models\Classroom;
 use App\Repositories\ClassroomRepositoryInterface;
+use Illuminate\Http\Request;
 
 
 class ClassroomController extends Controller
@@ -74,4 +75,12 @@ class ClassroomController extends Controller
         $this->repository->delete($Classroom);
         return $this->success([], "Classroom deleted with success" );
     }
+
+
+
+    function syncStudents(Request $request , int $classroom){
+        return $this->repository->syncStudents($classroom ,  $request->student_ids);
+    }
+
+  
 }

@@ -10,10 +10,10 @@ class TeacherRole implements Rule
 {
     public function passes($attribute, $value)
     {
-        // Retrieve the teacher role
+        
         $teacherRole = Role::where('name', 'teacher')->first();
 
-        // Check if the user with the specified ID has the teacher role
+         
         return User::find($value)->role->name == $teacherRole->name;
     }
 

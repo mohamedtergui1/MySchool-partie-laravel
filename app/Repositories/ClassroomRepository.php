@@ -51,4 +51,16 @@ class ClassroomRepository implements ClassroomRepositoryInterface
     {
         return Classroom::with(['students', 'teacher', 'grade', 'promo'])->latest()->paginate($Nrows);
     }
+  
+    public function syncStudents(int $Classroom, array $data)
+    {
+
+
+        $Classroom = $this->getById($Classroom);
+        $Classroom->students()->sync($data);
+        $Classroom->load('students', 'teacher', 'grade', 'promo');
+        return $Classroom;
+    }
+
+
 }

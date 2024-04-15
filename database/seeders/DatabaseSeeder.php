@@ -35,18 +35,18 @@ class DatabaseSeeder extends Seeder
             }
             $faker = Faker::create();
             Grade::create([
-                "name" => $faker->sentence(2)
+                "name" => "1 ere annee"
             ]);
 
             Grade::create([
-                "name" => $faker->sentence(2)
+                "name" => "2 eme annee"
             ]);
 
             Grade::create([
-                "name" => $faker->sentence(2)
+                "name" => "3 eme annee"
             ]);
 
-            $users = User::factory(30)->create();
+            $users = User::factory(100)->create();
 
 
             User::create([
