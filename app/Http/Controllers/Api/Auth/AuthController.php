@@ -104,20 +104,9 @@ class AuthController extends Controller
 
         $user = Auth::user();
 
-
         $refreshedToken = Auth::refresh();
 
-
-        $responseData = [
-            'user' => $user,
-            'authorization' => [
-                'token' => $refreshedToken,
-                'type' => 'bearer',
-            ]
-        ];
-
-
-        return $this->success($responseData);
+        return $this->success($refreshedToken);
     }
 
     public function forgot()

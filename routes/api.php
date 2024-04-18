@@ -5,9 +5,12 @@ use App\Http\Controllers\Api\GradeController;
 use App\Http\Controllers\Api\StudentController;
 use App\Http\Controllers\Api\PromoController;
 use App\Http\Controllers\Api\EmployeeController;
+use App\Http\Controllers\Api\AnnonceController;
+
+
 use App\Http\Middleware\RoleCheck;
 
-use Illuminate\Support\Facades\Route; 
+use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\Auth\AuthController;
 
 /* 
@@ -32,23 +35,21 @@ Route::controller(AuthController::class)->group(function () {
 });
 
 
- 
+
 
 Route::group(['middleware' => ['auth']], function () {
     Route::group(['middleware' => RoleCheck::class . ':admin'], function () {
+        
         Route::apiResource("admin/students", StudentController::class);
         Route::apiResource("admin/employees", EmployeeController::class);
+        Route::apiResource("admin/annonces", AnnonceController::class);
         Route::get("admin/allstudents", [StudentController::class, 'getStudents']);
         Route::get("admin/allteachers", [EmployeeController::class, 'getTeachers']);
-
         Route::apiResource("admin/promos", PromoController::class);
         Route::get("admin/allpromos", [PromoController::class, 'indexAll']);
-
         Route::apiResource("admin/grades", GradeController::class);
         Route::get("admin/allgrades", [GradeController::class, 'indexAll']);
-
         Route::apiResource("admin/classrooms", ClassroomController::class);
-
         Route::get("/admin/getAvailableStudents/{id}", [StudentController::class, "getAvailableStudents"]);
         Route::put("/admin/syncStudents/{id}", [ClassroomController::class, "syncStudents"]);
 

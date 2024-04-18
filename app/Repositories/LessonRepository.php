@@ -5,8 +5,8 @@ namespace App\Repositories;
 use App\Models\Lossons;
 
 
-class LossonsRepository implements LossonsRepositoryInterface
-{
+class LessonRepository implements LessonRepositoryInterface
+{ 
     public function create(array $data)
     {
         return Lossons::create($data);

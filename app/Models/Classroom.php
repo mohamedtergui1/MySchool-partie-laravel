@@ -12,19 +12,27 @@ class Classroom extends Model
         'name',
         'teacher_id',
         'grade_id',
-        "promo_id" 
+        "promo_id"
     ];
-    function students(){
-        return  $this->belongsToMany(User::class,"scholasticyears","classroom_id" ,"student_id"	);
+    function students()
+    {
+        return $this->belongsToMany(User::class, "scholasticyears", "classroom_id", "student_id");
     }
-    
-    function teacher(){
-        return $this->belongsTo(User::class,"teacher_id");
+
+    function teacher()
+    {
+        return $this->belongsTo(User::class, "teacher_id");
     }
-    function promo(){
-        return $this->belongsTo(Promo::class,"promo_id");
+    function promo()
+    {
+        return $this->belongsTo(Promo::class);
     }
-    function grade(){
-        return $this->belongsTo(Grade::class ,"grade_id");
+    function grade()
+    {
+        return $this->belongsTo(Grade::class);
+    }
+    function lessons()
+    {
+        return $this->belongsTo(Lesson::class);
     }
 }

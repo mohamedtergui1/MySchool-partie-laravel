@@ -4,7 +4,7 @@ namespace App\Repositories;
 
 use App\Models\Lossons;
 
-interface LossonsRepositoryInterface
+interface LessonRepositoryInterface
 {
     public function create(array $data);
 
