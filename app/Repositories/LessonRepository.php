@@ -2,42 +2,42 @@
 
 namespace App\Repositories;
 
-use App\Models\Lossons;
+use App\Models\Lesson;
 
-
+  
 class LessonRepository implements LessonRepositoryInterface
 { 
     public function create(array $data)
     {
-        return Lossons::create($data);
+        $lesson = Lesson::create($data);
+        $lesson->load("classroom"); 
+        return $lesson ;
     }
 
-    public function update(Lossons $Lossons, array $data)
+    public function update(Lesson $lesson, array $data)
     {
-        $Lossons->update($data);
-        return $Lossons;
+        $lesson->update($data);
+        $lesson->load("classroom");
+        return $lesson;
     }
 
-    public function delete(Lossons $Lossons)
+    public function delete(Lesson $Lesson)
     {
-        $Lossons->delete();
+       return  $Lesson->delete();
     }
 
     public function getById(int $id)
     {
-        return Lossons::find($id);
+        return Lesson::find($id);
     }
-    public function getByEmail(string $email)
-    {
-        return Lossons::where("email", $email)->firstOrFail();
-    }
+   
 
     public function getAll()
     {
-        return Lossons::all();
+        return Lesson::with("classroom")->all();
     }
     public function paginate(int $Nrows)
     {
-        return Lossons::latest()->paginate($Nrows);
+        return Lesson::with("classroom")->latest()->paginate($Nrows);
     }
 }

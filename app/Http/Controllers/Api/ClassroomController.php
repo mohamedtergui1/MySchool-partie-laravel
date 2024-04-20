@@ -82,5 +82,11 @@ class ClassroomController extends Controller
         return $this->success($this->repository->syncStudents($classroom ,  $request->student_ids));
     }
 
+
+
+    function getClassroomsForLesson(){
+        return $this->success($this->repository->teacherClassrooms());
+    }
+
   
 }

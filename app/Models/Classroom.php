@@ -33,6 +33,10 @@ class Classroom extends Model
     }
     function lessons()
     {
-        return $this->belongsTo(Lesson::class);
+        return $this->hasMany(Lesson::class);
+    }
+    function exams()
+    {
+        return $this->hasMany(Exam::class);
     }
 }

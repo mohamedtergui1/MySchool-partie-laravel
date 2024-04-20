@@ -24,10 +24,11 @@ class LessonRequest extends FormRequest
     public function rules(): array
     {
         return [
-            "name" => ["required","string","max:255"]
-            ,
-            "course_file" =>   ["required"]
+            "name" => ["required", "string", "max:255"],
+            "description" => ["nullable", "string", "max:1000", "min:20"],
+            "course_file" => ["nullable", "file", "mimes:pdf"]
         ];
+
     }
     protected function failedValidation(Validator $validator)
     {

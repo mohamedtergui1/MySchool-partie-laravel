@@ -3,6 +3,7 @@
 namespace App\Repositories;
 
 use App\Models\Classroom;
+use Illuminate\Support\Facades\Auth;
 
 
 class ClassroomRepository implements ClassroomRepositoryInterface
@@ -60,6 +61,14 @@ class ClassroomRepository implements ClassroomRepositoryInterface
         $Classroom->students()->sync($data);
         $Classroom->load('students', 'teacher', 'grade', 'promo');
         return $Classroom;
+    }
+
+    public function teacherClassrooms(){
+        $user = Auth::user();
+        if ($user->role_id = 1 || $user->role_id = 4)
+            return Classroom::all();
+        else
+           return $user->teacherClassroom;
     }
 
 

@@ -2,19 +2,19 @@
 
 namespace App\Repositories;
 
-use App\Models\Lossons;
+use App\Models\Lesson;
 
 interface LessonRepositoryInterface
 {
     public function create(array $data);
+ 
+    public function update(Lesson $Lesson, array $data);
 
-    public function update(Lossons $Lossons, array $data);
-
-    public function delete(Lossons $Lossons);
+    public function delete(Lesson $Lesson);
 
     public function getById(int $id);
 
-    public function getByEmail(string $email);
+    
 
     public function getAll();
 

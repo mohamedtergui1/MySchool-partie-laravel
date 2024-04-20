@@ -10,9 +10,8 @@ interface ClassroomRepositoryInterface{
 
     public function delete(Classroom $Classroom);
     public function getById(int $id);
-     
-    
 
+    public function teacherClassrooms();
     public function getAll(); 
     public function paginate(int $Nrows);
     public function syncStudents(int $Classroom, array $data);

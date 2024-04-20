@@ -7,10 +7,14 @@ use Illuminate\Database\Eloquent\Model;
 
 class Exam extends Model
 {
+    use HasFactory;
     protected $fillable = [
         "title",
         "date",
         "classroom_id"
     ];
-    use HasFactory;
+    function classroom()
+    {
+        return $this->belongsTo(Classroom::class);
+    }
 }

@@ -6,6 +6,8 @@ use App\Http\Controllers\Api\StudentController;
 use App\Http\Controllers\Api\PromoController;
 use App\Http\Controllers\Api\EmployeeController;
 use App\Http\Controllers\Api\AnnonceController;
+use App\Http\Controllers\Api\LessonController;
+
 
 
 use App\Http\Middleware\RoleCheck;
@@ -39,7 +41,7 @@ Route::controller(AuthController::class)->group(function () {
 
 Route::group(['middleware' => ['auth']], function () {
     Route::group(['middleware' => RoleCheck::class . ':admin'], function () {
-        
+
         Route::apiResource("admin/students", StudentController::class);
         Route::apiResource("admin/employees", EmployeeController::class);
         Route::apiResource("admin/annonces", AnnonceController::class);
@@ -53,11 +55,12 @@ Route::group(['middleware' => ['auth']], function () {
         Route::apiResource("admin/classrooms", ClassroomController::class);
         Route::get("/admin/getAvailableStudents/{id}", [StudentController::class, "getAvailableStudents"]);
         Route::put("/admin/syncStudents/{id}", [ClassroomController::class, "syncStudents"]);
+        Route::apiResource("/teacher/Lessons", LessonController::class);
+        Route::get("/classrooms/lesson", [ClassroomController::class, "getClassroomsForLesson"]);
 
     });
 });
 
 
 // Route::group(['middleware' => ['auth','role.check:admin']], function () {
-//     // Route::apiResource("teacher/lossons",LossonsController::class);  
 // });

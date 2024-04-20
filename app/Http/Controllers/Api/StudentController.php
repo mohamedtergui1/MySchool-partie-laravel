@@ -101,13 +101,29 @@ class StudentController extends Controller
             $extension = $file->getClientOriginalExtension();
             $fileName = time() . '.' . $extension;
             $path = 'uploads/students/';
-            $file->move($path, $fileName);
+
+             
             $user = $this->repository->getById($id);
+            $oldImage = $user->image ?? null;
+
+         
+            $file->move($path, $fileName);
+
+             
             $user = $this->repository->update($user, ["image" => $fileName]);
 
-            return $this->success($user, "image updated successfully");
+             
+            if ($oldImage) {
+                $oldImagePath = $path . $oldImage;
+                if (file_exists($oldImagePath)) {
+                    unlink($oldImagePath);  
+                }
+            }
+
+            return $this->success($user, "Image updated successfully");
         }
     }
+
 
 }
 
