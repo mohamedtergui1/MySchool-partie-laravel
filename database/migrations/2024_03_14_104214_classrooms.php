@@ -14,12 +14,11 @@ return new class extends Migration
         Schema::create('classrooms', function (Blueprint $table) {
             $table->id();
             $table->string("name");
-            $table->foreignId("promo_id")->constrained("promos")->default(1)->onDelete("set default");
-            $table->foreignId("grade_id")->constrained("grades")->default(1)->onDelete("set default");
-            $table->foreignId("teacher_id")->constrained("users")->default(1)->onDelete("set default");
+            $table->foreignId("promo_id")->constrained("promos")->nullable()->default(1)->onDelete("set default")->onUpdate("cascade");
+            $table->foreignId("grade_id")->constrained("grades")->nullable()->default(1)->onDelete("set default")->onUpdate("cascade");
+            $table->foreignId("teacher_id")->constrained("users")->nullable()->default(1)->onDelete("set default")->onUpdate("cascade");
             $table->timestamps();
         });
-
     }
 
     /**

@@ -79,7 +79,7 @@ class ClassroomController extends Controller
 
 
     function syncStudents(Request $request , int $classroom){
-        return $this->repository->syncStudents($classroom ,  $request->student_ids);
+        return $this->success($this->repository->syncStudents($classroom ,  $request->student_ids));
     }
 
   

@@ -41,30 +41,7 @@ class EmployeeController extends Controller
     }
     public function show(int $id)
     {
-        $user = $this->repository->getById($id);
-        if ($user)
-            return response()->json(
-                [
-                    "status" => true
-                    ,
-                    'data' => $user
-
-                    ,
-                    "message" => "user created successfully"
-                ]
-                ,
-                201
-            );
-        else
-            return response()->json(
-                [
-                    "status" => false
-                    ,
-                    "message" => "no user found"
-                ]
-                ,
-                404
-            );
+        
     }
 
 

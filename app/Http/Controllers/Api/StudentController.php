@@ -22,11 +22,12 @@ class StudentController extends Controller
     public function index()
     {
 
-        return $this->success($this->repository->paginate(10,[3]));
+        return $this->success($this->repository->paginate(10, [3]));
 
     }
 
-    function getStudents(){
+    function getStudents()
+    {
         return $this->success($this->repository->getAll([3]));
     }
 
@@ -34,54 +35,23 @@ class StudentController extends Controller
     {
 
 
-       
-        if ($request->hasFile("image")) {
-            $file = $request->file('image');
-            $extension = $file->getClientOriginalExtension();
-            $fileName = time() . '.' . $extension;
-            $path = 'uploads/students/';
-            $file->move($path, $fileName);
-            $all["image"] = $fileName;
-        }   
-        $user = $this->repository->create($all);
+
+        $user = $this->repository->create($request->all() + ["role_id" => 3]);
         return $this->success($user, "student created successfully", 201);
     }
     public function show(int $id)
     {
-        $user = $this->repository->getById($id);
-        if ($user)
-            return response()->json(
-                [
-                    "status" => true
-                    ,
-                    'data' => $user
 
-                    ,
-                    "message" => "student created successfully"
-                ]
-                ,
-                201
-            );
-        else
-            return response()->json(
-                [
-                    "status" => false
-                    ,
-                    "message" => "no user found"
-                ]
-                ,
-                404
-            );
     }
 
 
 
-    public function update(Request $request,int $user)
+    public function update(Request $request, int $user)
     {
 
 
 
-      
+
 
         $user = $this->repository->getById($user);
         $validator = Validator::make($request->all(), [
@@ -96,29 +66,20 @@ class StudentController extends Controller
             ]
 
             ,
-        
+
             'role_id' => 'in:3',
         ]);
         if ($validator->fails()) {
             return response()->json([
                 'status' => false,
                 'errors' => $validator->errors(),
-                'message' => "Validation errors occurred." 
+                'message' => "Validation errors occurred."
             ], 422);
         }
 
-        $all = $request->all();
 
-        if ($request->hasFile("image")) {
-            $file = $request->file('image');
-            $extension = $file->getClientOriginalExtension();
-            $fileName = time() . '.' . $extension;
-            $path = 'uploads/students/';
-            $file->move($path, $fileName);
-            $all["image"] = $fileName;
-        }
 
-        $user = $this->repository->update($user, $all);
+        $user = $this->repository->update($user, $request->all());
 
         return $this->success($user, "student updated successfully");
     }
@@ -132,4 +93,21 @@ class StudentController extends Controller
     {
         return $this->success($this->repository->getAvailableStudents($id));
     }
+    function changeImage(Request $request, int $id)
+    {
+        if ($request->hasFile("image")) {
+
+            $file = $request->file('image');
+            $extension = $file->getClientOriginalExtension();
+            $fileName = time() . '.' . $extension;
+            $path = 'uploads/students/';
+            $file->move($path, $fileName);
+            $user = $this->repository->getById($id);
+            $user = $this->repository->update($user, ["image" => $fileName]);
+
+            return $this->success($user, "image updated successfully");
+        }
+    }
+
 }
+

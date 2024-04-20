@@ -44,6 +44,7 @@ Route::group(['middleware' => ['auth']], function () {
         Route::apiResource("admin/employees", EmployeeController::class);
         Route::apiResource("admin/annonces", AnnonceController::class);
         Route::get("admin/allstudents", [StudentController::class, 'getStudents']);
+        Route::post("/admin/students/changeImage/{id}", [StudentController::class, 'changeImage']);
         Route::get("admin/allteachers", [EmployeeController::class, 'getTeachers']);
         Route::apiResource("admin/promos", PromoController::class);
         Route::get("admin/allpromos", [PromoController::class, 'indexAll']);
