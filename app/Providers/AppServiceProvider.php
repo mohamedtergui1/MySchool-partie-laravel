@@ -18,9 +18,11 @@ use App\Repositories\ScholasticyearRepository;
 use App\Repositories\ScholasticyearRepositoryInterface;
 use App\Repositories\UserRepository;
 use App\Repositories\UserRepositoryInterface;
+use App\Repositories\ExamRepository;
+use App\Repositories\ExamRepositoryInterface;
 use Illuminate\Support\ServiceProvider;
 
-class AppServiceProvider extends ServiceProvider
+class AppServiceProvider extends ServiceProvider 
 {
     /**
      * Register any application services.
@@ -35,6 +37,8 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(PromoRepositoryInterface::class, PromoRepository::class);
         $this->app->bind(GradeRepositoryInterface::class, GradeRepository::class);
         $this->app->bind(AnnonceRepositoryInterface::class, AnnonceRepository::class);
+        $this->app->bind(ExamRepositoryInterface::class, ExamRepository::class);
+
 
 
 

@@ -14,11 +14,10 @@ return new class extends Migration {
             $table->id();
             $table->string(("title"));
             $table->string("date");
-            $table->foreignId("classroom_id")->constrained("classrooms");
+            $table->foreignId("classroom_id")->constrained("classrooms")->cascadeOnDelete();
             $table->timestamps();
         });
     }
-
     /**
      * Reverse the migrations.
      */

@@ -7,6 +7,8 @@ use App\Http\Controllers\Api\PromoController;
 use App\Http\Controllers\Api\EmployeeController;
 use App\Http\Controllers\Api\AnnonceController;
 use App\Http\Controllers\Api\LessonController;
+use App\Http\Controllers\Api\ExamController;
+
 
 
 
@@ -48,6 +50,7 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get("admin/allstudents", [StudentController::class, 'getStudents']);
         Route::post("/admin/students/changeImage/{id}", [StudentController::class, 'changeImage']);
         Route::get("admin/allteachers", [EmployeeController::class, 'getTeachers']);
+        Route::post("/admin/employees/changeImage/{id}", [EmployeeController::class, 'changeImage']);
         Route::apiResource("admin/promos", PromoController::class);
         Route::get("admin/allpromos", [PromoController::class, 'indexAll']);
         Route::apiResource("admin/grades", GradeController::class);
@@ -57,6 +60,8 @@ Route::group(['middleware' => ['auth']], function () {
         Route::put("/admin/syncStudents/{id}", [ClassroomController::class, "syncStudents"]);
         Route::apiResource("/teacher/Lessons", LessonController::class);
         Route::get("/classrooms/lesson", [ClassroomController::class, "getClassroomsForLesson"]);
+        Route::apiResource("/teacher/exams", ExamController::class);
+
 
     });
 });

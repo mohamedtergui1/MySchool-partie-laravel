@@ -102,26 +102,39 @@ class StudentController extends Controller
             $fileName = time() . '.' . $extension;
             $path = 'uploads/students/';
 
-             
+
             $user = $this->repository->getById($id);
             $oldImage = $user->image ?? null;
 
-         
             $file->move($path, $fileName);
 
-             
+
             $user = $this->repository->update($user, ["image" => $fileName]);
 
-             
+
             if ($oldImage) {
                 $oldImagePath = $path . $oldImage;
                 if (file_exists($oldImagePath)) {
-                    unlink($oldImagePath);  
+                    unlink($oldImagePath);
                 }
             }
 
             return $this->success($user, "Image updated successfully");
+        } else if ($request->image == "") {
+            $user = $this->repository->getById($id);
+            $oldImage = $user->image ?? null;
+            $path = 'uploads/students/';
+            $user = $this->repository->update($user, ["image" => null]);
+            if ($oldImage) {
+                $oldImagePath = $path . $oldImage;
+                if (file_exists($oldImagePath)) {
+                    unlink($oldImagePath);
+                }
+            }
+            return $this->success($user, "Image deleted successfully");
+
         }
+
     }
 
 

@@ -4,40 +4,39 @@ namespace App\Repositories;
 
 use App\Models\Exam;
 
-
 class ExamRepository implements ExamRepositoryInterface
 {
     public function create(array $data)
     {
-        $Exam = Exam::create($data);
-        $Exam->load("user");
-        return $Exam;
-    } 
+        $exam = Exam::create($data);
+        $exam->load("classroom","results.student");
+        return $exam;
+    }
 
-    public function update(Exam $Exam, array $data)
+    public function update(Exam $exam, array $data)
     {
-        $Exam->update($data);
-        $Exam->load("user");
-        return $Exam;
+        $exam->update($data);
+        $exam->load("classroom","results.student");
+        return $exam;
     }
-    public function delete(Exam $Exam)
+
+    public function delete(Exam $exam)
     {
-        return $Exam->delete();
+        return $exam->delete();
     }
+
     public function getById(int $id)
     {
-        return Exam::find($id);
+        return Exam::with("classroom","results.student")->find($id);
     }
+
     public function getAll()
     {
-        $Exams = Exam::all();
-        $Exams->load("user");
-        return $Exams;
+        return Exam::with("classroom","results.student")->get();
     }
-    public function paginate(int $Nrows)
+
+    public function paginate(int $rowsPerPage)
     {
-        $Exams = Exam::latest()->paginate($Nrows);
-        $Exams->load("user");
-        return $Exams;
+        return Exam::latest()->with("classroom","results.student")->paginate($rowsPerPage);
     }
 }

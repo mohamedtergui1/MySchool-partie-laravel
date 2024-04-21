@@ -17,4 +17,8 @@ class Exam extends Model
     {
         return $this->belongsTo(Classroom::class);
     }
+    function results()
+    {
+        return $this->hasMany(Result::class);
+    }
 }
