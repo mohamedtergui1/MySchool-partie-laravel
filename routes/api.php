@@ -13,8 +13,7 @@ use App\Http\Controllers\Api\ResultController;
 
 
 
-
-use App\Http\Middleware\RoleCheck;
+ 
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\Auth\AuthController;
@@ -43,9 +42,8 @@ Route::controller(AuthController::class)->group(function () {
 
 
 
-Route::group(['middleware' => ['auth']], function () {
-    Route::group(['middleware' => RoleCheck::class . ':admin'], function () {
-
+Route::group(['middleware' => ['auth','role:admin']], function () {
+    
 
         Route::apiResource("admin/students", StudentController::class);
         Route::apiResource("admin/employees", EmployeeController::class);
@@ -69,8 +67,7 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get("/teacher/resultexam/{id}", [ResultController::class, "getResultExam"]);
         Route::post("/teacher/updateResult", [ResultController::class, "setResultExam"]);
 
-
-    });
+ 
 });
 
 
