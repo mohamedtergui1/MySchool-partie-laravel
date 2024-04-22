@@ -1,3 +1,8 @@
+
+# about MySchool
+
+MySchool est une plateforme de gestion scolaire innovante conçue pour simplifier et améliorer les processus administratifs, académiques et de communication au sein des établissements scolaires. Notre objectif est de fournir une solution complète et intuitive qui répond aux besoins des éducateurs et des étudiants .
+
 <p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
 
 <p align="center">
