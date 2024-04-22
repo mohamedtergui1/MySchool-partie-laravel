@@ -1,20 +1,26 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api;
 
+use App\Http\Controllers\Controller;
 use App\Models\Result;
 use Illuminate\Http\Request;
-
+use App\Repositories\ResultRepositoryInterface;
 class ResultController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+      private $repository;
+    function __construct(ResultRepositoryInterface $repository)
+    { 
+        $this->repository = $repository; 
+    }
+    public function index() 
     {
         //
     }
-
+ 
     /**
      * Show the form for creating a new resource.
      */
@@ -61,5 +67,18 @@ class ResultController extends Controller
     public function destroy(Result $result)
     {
         //
+    }
+    function getResultExam(int $id){
+        return $this->success($this->repository->getResultExam($id));
+    }
+
+    function setResultExam(Request $request)
+    {
+        foreach($request->notes as $note){
+           $result = $this->repository->getById($note[0]);
+           if(gettype($note[1]) == "integer" || gettype($note[1]) == "double")
+               $this->repository->update($result , ["note" => $note[1]]);
+        }
+        return $this->success([],"results updated with success"); 
     }
 }

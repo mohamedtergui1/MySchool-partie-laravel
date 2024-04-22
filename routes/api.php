@@ -8,6 +8,8 @@ use App\Http\Controllers\Api\EmployeeController;
 use App\Http\Controllers\Api\AnnonceController;
 use App\Http\Controllers\Api\LessonController;
 use App\Http\Controllers\Api\ExamController;
+use App\Http\Controllers\Api\ResultController;
+
 
 
 
@@ -44,6 +46,7 @@ Route::controller(AuthController::class)->group(function () {
 Route::group(['middleware' => ['auth']], function () {
     Route::group(['middleware' => RoleCheck::class . ':admin'], function () {
 
+
         Route::apiResource("admin/students", StudentController::class);
         Route::apiResource("admin/employees", EmployeeController::class);
         Route::apiResource("admin/annonces", AnnonceController::class);
@@ -60,7 +63,11 @@ Route::group(['middleware' => ['auth']], function () {
         Route::put("/admin/syncStudents/{id}", [ClassroomController::class, "syncStudents"]);
         Route::apiResource("/teacher/Lessons", LessonController::class);
         Route::get("/classrooms/lesson", [ClassroomController::class, "getClassroomsForLesson"]);
+
+
         Route::apiResource("/teacher/exams", ExamController::class);
+        Route::get("/teacher/resultexam/{id}", [ResultController::class, "getResultExam"]);
+        Route::post("/teacher/updateResult", [ResultController::class, "setResultExam"]);
 
 
     });

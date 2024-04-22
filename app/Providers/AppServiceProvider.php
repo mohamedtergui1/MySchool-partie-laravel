@@ -20,6 +20,11 @@ use App\Repositories\UserRepository;
 use App\Repositories\UserRepositoryInterface;
 use App\Repositories\ExamRepository;
 use App\Repositories\ExamRepositoryInterface;
+use App\Repositories\ResultRepository; 
+use App\Repositories\ResultRepositoryInterface;
+
+
+
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider 
@@ -38,10 +43,7 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(GradeRepositoryInterface::class, GradeRepository::class);
         $this->app->bind(AnnonceRepositoryInterface::class, AnnonceRepository::class);
         $this->app->bind(ExamRepositoryInterface::class, ExamRepository::class);
-
-
-
-
+        $this->app->bind(ResultRepositoryInterface::class, ResultRepository::class);
 
 
     }

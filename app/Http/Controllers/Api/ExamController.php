@@ -35,7 +35,7 @@ class ExamController extends Controller
     public function store(Request $request)
     {
         //
-        return $this->success($this->repository->create($request->all()));
+        return $this->success($this->repository->create($request->all()),"exam added with success");
     }
 
     /**
@@ -60,7 +60,7 @@ class ExamController extends Controller
     public function update(Request $request, int $exam)
     {
         //
-        return $this->success($this->repository->update($this->repository->getById($exam),$request->all()));
+        return $this->success($this->repository->update($this->repository->getById($exam),$request->all()),"exam updates with success");
 
     }
 
@@ -71,6 +71,6 @@ class ExamController extends Controller
     {
         //
         $this->repository->delete($this->repository->getById($exam));
-        return $this->success();
+        return $this->success([],"exam deleted with success");
     }
 }

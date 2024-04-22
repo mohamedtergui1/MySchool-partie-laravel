@@ -152,7 +152,7 @@ class AuthController extends Controller
             ->first();
 
         if (!$updatePassword) {
-            return  $this->failed([], "Invalid token!") ; 
+            return $this->failed([], "Invalid token!");
         }
 
         $user = $this->userRepository->getByEmail(request('email'))

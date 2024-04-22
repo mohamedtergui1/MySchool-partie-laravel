@@ -21,4 +21,8 @@ class Exam extends Model
     {
         return $this->hasMany(Result::class);
     }
+
+    function students(){
+        return $this->belongsToMany(User::class, "results","exam_id", "student_id");
+    }
 }
