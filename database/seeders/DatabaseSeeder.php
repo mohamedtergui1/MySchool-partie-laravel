@@ -46,7 +46,7 @@ class DatabaseSeeder extends Seeder
                 "name" => "3 eme annee"
             ]);
 
-            $users = User::factory(100)->create();
+            $users = User::factory(1000)->create();
 
 
             User::create([
