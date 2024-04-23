@@ -28,7 +28,7 @@ class User extends Authenticatable implements JWTSubject
         'grade_id',
         'address',
         'number_phone',
-        'date_d_inscription',
+        'date_of_birth',
         'genre',
         'image'
     ];

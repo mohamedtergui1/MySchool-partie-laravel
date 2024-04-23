@@ -68,7 +68,7 @@ class ClassroomRepository implements ClassroomRepositoryInterface
         if ($user->role_id = 1 || $user->role_id = 4)
             return Classroom::all();
         else
-           return $user->teacherClassroom;
+           return Classroom::where("teacher_id",$user->id)->latest()->get();
     }
 
 

@@ -22,7 +22,7 @@ return new class extends Migration {
             $table->unsignedBigInteger('grade_id')->nullable();
             $table->string('address')->nullable();
             $table->string('number_phone')->nullable();
-            $table->date('date_d_inscription')->nullable();
+            $table->date('date_of_birth')->nullable();
             $table->foreignId("role_id")->constrained("roles");
             $table->timestamp('email_verified_at')->nullable();
             $table->rememberToken();

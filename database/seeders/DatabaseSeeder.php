@@ -58,7 +58,7 @@ class DatabaseSeeder extends Seeder
                 'grade_id' => 1,
                 'address' => 'Admin Address',
                 'number_phone' => '1234567890',
-                'date_d_inscription' => now(),
+                'date_of_birth' => now(),
                 'role_id' => 1
             ]);
 
@@ -71,7 +71,7 @@ class DatabaseSeeder extends Seeder
                 'grade_id' => 1,
                 'address' => 'teacher Address',
                 'number_phone' => '1234567890',
-                'date_d_inscription' => now(),
+                'date_of_birth' => now(),
                 'role_id' => 2
             ]);
 

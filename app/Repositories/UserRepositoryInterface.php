@@ -19,4 +19,5 @@ interface UserRepositoryInterface
 
     public function paginate(int $Nrows, array $role_id = null);
     public function getAvailableStudents(int $classId);
+    public function getStudentByClassroomId(int $id);
 }

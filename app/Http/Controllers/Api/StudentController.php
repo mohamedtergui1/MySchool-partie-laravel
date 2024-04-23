@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StudentRequest;
 
-use App\Repositories\UserRepository;
+use App\Repositories\UserRepositoryInterface;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
@@ -15,7 +15,7 @@ class StudentController extends Controller
 {
 
     private $repository;
-    function __construct(UserRepository $repository)
+    function __construct(UserRepositoryInterface $repository)
     {
         $this->repository = $repository;
     }
@@ -135,6 +135,11 @@ class StudentController extends Controller
 
         }
 
+    }
+ 
+ 
+    function classroomStudents(int $id){
+        return $this->success($this->repository->getStudentByClassroomId($id));
     }
 
 

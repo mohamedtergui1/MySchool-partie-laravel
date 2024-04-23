@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Api\ClassroomController;
 use App\Http\Controllers\Api\GradeController;
+use App\Http\Controllers\Api\ProfileController;
 use App\Http\Controllers\Api\StudentController;
 use App\Http\Controllers\Api\PromoController;
 use App\Http\Controllers\Api\EmployeeController;
@@ -17,6 +18,7 @@ use App\Http\Controllers\Api\ResultController;
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\Auth\AuthController;
+use Symfony\Component\HttpKernel\Profiler\Profile;
 
 /* 
 |--------------------------------------------------------------------------
@@ -43,7 +45,6 @@ Route::controller(AuthController::class)->group(function () {
 
 
 Route::group(['middleware' => ['auth','role:admin']], function () {
-    
 
         Route::apiResource("admin/students", StudentController::class);
         Route::apiResource("admin/employees", EmployeeController::class);
@@ -59,17 +60,24 @@ Route::group(['middleware' => ['auth','role:admin']], function () {
         Route::apiResource("admin/classrooms", ClassroomController::class);
         Route::get("/admin/getAvailableStudents/{id}", [StudentController::class, "getAvailableStudents"]);
         Route::put("/admin/syncStudents/{id}", [ClassroomController::class, "syncStudents"]);
-        Route::apiResource("/teacher/Lessons", LessonController::class);
         Route::get("/classrooms/lesson", [ClassroomController::class, "getClassroomsForLesson"]);
-
-
+        Route::apiResource("/teacher/Lessons", LessonController::class);
         Route::apiResource("/teacher/exams", ExamController::class);
         Route::get("/teacher/resultexam/{id}", [ResultController::class, "getResultExam"]);
-        Route::post("/teacher/updateResult", [ResultController::class, "setResultExam"]);
+        Route::post("/teacher/updateResult", [ResultController::class, "setResultExam"]);  
+        
+    });
 
- 
+Route::group(['middleware' => ['auth', 'role:admin|teacher']], function () {
+
+    Route::put("/updateProfile", [ProfileController::class, "updateProfile"]);
+    Route::get("/teacher/classroom", [ClassroomController::class, "getTeacherClassroom"]);
+    Route::get("/teacher/classroom/students/{id}",[StudentController::class,"classroomStudents"]);
+    Route::get("/teacher/classroom/lessons/{id}", [LessonController::class, "classroomLessons"]);
+    Route::get("/teacher/classroom/exams/{id}", [StudentController::class, "classroomStudents"]);
+
+
+
 });
-
-
 // Route::group(['middleware' => ['auth','role.check:admin']], function () {
 // });

@@ -88,5 +88,10 @@ class ClassroomController extends Controller
         return $this->success($this->repository->teacherClassrooms());
     }
 
-  
+    function getTeacherClassroom(){
+        $classrooms = $this->repository->teacherClassrooms();
+        $classrooms->load("students", "grade", "promo");
+
+        return $this->success($classrooms);
+    }
 }

@@ -39,8 +39,7 @@ class UserRepository implements UserRepositoryInterface
     public function getAll(array $role_id = null)
     {
         if ($role_id)
-            $users = User::latest()->whereIn("role_id", $role_id)
-
+            $users = User::latest()->whereIn("role_id", $role_id)->where("id", "<>", Auth::id())
                 ->get();
         else
             $users = User::latest()->get();

@@ -33,7 +33,7 @@ class StudentRequest extends FormRequest
             'grade_id' => 'required|exists:grades,id',
             'address' => 'required|string|max:255',
             'number_phone' => 'required|string|max:20',
-            'date_d_inscription' => 'required|date'
+            'date_of_birth' => 'required|date'
         ];
 
     }

@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\EmployeeRequest;
-use App\Repositories\UserRepository;
+use App\Repositories\UserRepositoryInterface;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Validator;
@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Validator;
 class EmployeeController extends Controller
 {
     private $repository;
-    function __construct(UserRepository $repository)
+    function __construct(UserRepositoryInterface $repository)
     {
         $this->repository = $repository;
     }
