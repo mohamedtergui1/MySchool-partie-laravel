@@ -66,6 +66,12 @@ class UserRepository implements UserRepositoryInterface
         })->get();
 
         return $students;
+        
     }
-
+    public function getStudentByClassroomId(int $id){
+        return User::where("role_id",3)->whereHas("classrooms", function ($query) use ($id) {
+            $query->where('classrooms.id', $id); 
+        })->get(); 
+    } 
+ 
 }
