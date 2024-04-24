@@ -70,10 +70,10 @@ class LessonController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(LessonRequest $request, Lesson $lesson)
+    public function update(LessonRequest $request, int $lesson)
     {
         //
-        return $this->success($this->repository->update($lesson, $request->all()));
+        return $this->success($this->repository->update( $this->repository->getById($lesson), $request->all()));
 
     }
 
@@ -86,5 +86,11 @@ class LessonController extends Controller
         $this->repository->delete($this->repository->getById($lesson));
         return $this->success([], "lessons deleted with success");
 
+    }
+
+
+    function classroomLessons(int $id){
+
+        return $this->success($this->repository->getByClassId($id));
     }
 }

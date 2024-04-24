@@ -40,4 +40,10 @@ class LessonRepository implements LessonRepositoryInterface
     {
         return Lesson::with("classroom")->latest()->paginate($Nrows);
     }
+    public function getByClassId(int $id){
+        return Lesson::whereHas('classroom', function ($query) use ($id) {
+            $query->where('classrooms.id', $id);
+        })->get();
+    }
+
 }

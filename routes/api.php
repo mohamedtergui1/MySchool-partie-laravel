@@ -61,22 +61,20 @@ Route::group(['middleware' => ['auth','role:admin']], function () {
         Route::get("/admin/getAvailableStudents/{id}", [StudentController::class, "getAvailableStudents"]);
         Route::put("/admin/syncStudents/{id}", [ClassroomController::class, "syncStudents"]);
         Route::get("/classrooms/lesson", [ClassroomController::class, "getClassroomsForLesson"]);
-        Route::apiResource("/teacher/Lessons", LessonController::class);
-        Route::apiResource("/teacher/exams", ExamController::class);
         Route::get("/teacher/resultexam/{id}", [ResultController::class, "getResultExam"]);
         Route::post("/teacher/updateResult", [ResultController::class, "setResultExam"]);  
         
     });
-
-Route::group(['middleware' => ['auth', 'role:admin|teacher']], function () {
-
+    
+    Route::group(['middleware' => ['auth', 'role:admin|teacher']], function () {
+        
+    Route::apiResource("/teacher/exams", ExamController::class);
+    Route::apiResource("/teacher/Lessons", LessonController::class);
     Route::put("/updateProfile", [ProfileController::class, "updateProfile"]);
     Route::get("/teacher/classroom", [ClassroomController::class, "getTeacherClassroom"]);
     Route::get("/teacher/classroom/students/{id}",[StudentController::class,"classroomStudents"]);
     Route::get("/teacher/classroom/lessons/{id}", [LessonController::class, "classroomLessons"]);
-    Route::get("/teacher/classroom/exams/{id}", [StudentController::class, "classroomStudents"]);
-
-
+    Route::get("/teacher/classroom/exams/{id}", [ExamController::class, "classroomExams"]);
 
 });
 // Route::group(['middleware' => ['auth','role.check:admin']], function () {

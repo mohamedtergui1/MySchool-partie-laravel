@@ -73,4 +73,7 @@ class ExamController extends Controller
         $this->repository->delete($this->repository->getById($exam));
         return $this->success([],"exam deleted with success");
     }
+    function classroomExams ($id){
+        return $this->success($this->repository->getByClassId($id));
+    }
 }

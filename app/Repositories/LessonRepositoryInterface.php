@@ -19,4 +19,5 @@ interface LessonRepositoryInterface
     public function getAll();
 
     public function paginate(int $Nrows);
+    public function getByClassId(int $id);
 }
