@@ -41,9 +41,10 @@ class ExamController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Exam $exam)
+    public function show(int $id)
     {
         //
+
     }
 
     /**
@@ -76,4 +77,10 @@ class ExamController extends Controller
     function classroomExams ($id){
         return $this->success($this->repository->getByClassId($id));
     }
+
+    function getClassExams($id){
+        return $this->success($this->repository->getClassExams($id));
+
+    }
 }
+ 
