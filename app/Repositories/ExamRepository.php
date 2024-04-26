@@ -47,5 +47,8 @@ class ExamRepository implements ExamRepositoryInterface
             $query->where("classrooms.id", $id);
         })->get();
     }
-
+    public function getClassExams($id){
+        return Exam::with("results.student")->where("classroom_id",$id)->get();
+    }
+     
 }

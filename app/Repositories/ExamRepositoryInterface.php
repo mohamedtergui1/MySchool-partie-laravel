@@ -19,4 +19,5 @@ interface ExamRepositoryInterface
 
     public function paginate(int $Nrows);
     public function getByClassId(int $is);
+    public function getClassExams ($id);
 }
