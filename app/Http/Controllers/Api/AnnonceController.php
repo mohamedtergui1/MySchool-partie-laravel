@@ -63,6 +63,9 @@ class AnnonceController extends Controller
     public function update(Request $request, Annonce $annonce)
     {
         //
+        $user = Auth::user();
+        if ($user->role->name != "admin")
+            $this->authorize('view', $annonce);
         return $this->success($this->repository->update($annonce,$request->all()));
     }
 
@@ -70,7 +73,12 @@ class AnnonceController extends Controller
      * Remove the specified resource from storage.
      */ 
     public function destroy(Annonce $annonce)
-    {
+    {   
+
+        $user = Auth::user();
+
+        if($user->role->name !=  "admin")
+            $this->authorize('view', $annonce);
         return $this->repository->delete($annonce);
     } 
 }
