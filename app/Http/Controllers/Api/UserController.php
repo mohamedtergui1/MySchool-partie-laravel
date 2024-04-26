@@ -13,7 +13,7 @@ use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Validator;
 
-class UserController extends Controller
+ abstract class UserController extends Controller
 {
 
     protected $repository;
@@ -21,34 +21,10 @@ class UserController extends Controller
     {
         $this->repository = $repository;
     }
-    public function index()
-    {
+      abstract function index();
 
-        return $this->success($this->repository->paginate(10, [3]));
-
-    }
-
-    function getUsers()
-    {
-        return $this->success($this->repository->getAll([3]));
-    }
-
-    public function store(UserRequest $request)
-    {
-
-
-
-        if ($request->hasFile("image")) {
-            $file = $request->file('image');
-            $extension = $file->getClientOriginalExtension();
-            $fileName = time() . '.' . $extension;
-            $path = 'uploads/Users/';
-            $file->move($path, $fileName);
-            $all["image"] = $fileName;
-        }
-        $user = $this->repository->create($all);
-        return $this->success($user, "User created successfully", 201);
-    }
+    abstract public function store(UserRequest $request);
+    
     public function show(int $id)
     {
         $user = $this->repository->getById($id);

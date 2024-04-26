@@ -48,7 +48,6 @@ Route::group(['middleware' => ['auth','role:admin']], function () {
 
         Route::apiResource("admin/students", StudentController::class);
         Route::apiResource("admin/employees", EmployeeController::class);
-        Route::apiResource("admin/annonces", AnnonceController::class);
         Route::get("admin/allstudents", [StudentController::class, 'getStudents']);
         Route::post("/admin/students/changeImage/{id}", [StudentController::class, 'changeImage']);
         Route::get("admin/allteachers", [EmployeeController::class, 'getTeachers']);
@@ -68,14 +67,16 @@ Route::group(['middleware' => ['auth','role:admin']], function () {
     
     Route::group(['middleware' => ['auth', 'role:admin|teacher']], function () {
         
-    Route::apiResource("/teacher/exams", ExamController::class);
-    Route::apiResource("/teacher/Lessons", LessonController::class);
-    Route::put("/updateProfile", [ProfileController::class, "updateProfile"]);
-    Route::get("/teacher/classroom", [ClassroomController::class, "getTeacherClassroom"]);
-    Route::get("/teacher/classroom/students/{id}",[StudentController::class,"classroomStudents"]);
-    Route::get("/teacher/classroom/lessons/{id}", [LessonController::class, "classroomLessons"]);
-    Route::get("/teacher/classroom/exams/{id}", [ExamController::class, "classroomExams"]);
-
-});
-// Route::group(['middleware' => ['auth','role.check:admin']], function () {
-// });
+        Route::apiResource("admin/annonces", AnnonceController::class);
+        Route::apiResource("/teacher/exams", ExamController::class);
+        Route::apiResource("/teacher/Lessons", LessonController::class);
+        Route::put("/updateProfile", [ProfileController::class, "updateProfile"]);
+        Route::post("/updateProfileImage", [ProfileController::class, "updateProfileImage"]);
+        Route::get("/teacher/classroom", [ClassroomController::class, "getTeacherClassroom"]);
+        Route::get("/teacher/classroom/students/{id}",[StudentController::class,"classroomStudents"]);
+        Route::get("/teacher/classroom/lessons/{id}", [LessonController::class, "classroomLessons"]);
+        Route::get("/teacher/classroom/exams/{id}", [ExamController::class, "classroomExams"]);
+        
+    });
+    // Route::group(['middleware' => ['auth','role.check:admin']], function () {
+        // });
