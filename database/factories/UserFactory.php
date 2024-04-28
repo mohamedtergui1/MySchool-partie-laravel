@@ -34,7 +34,7 @@ class UserFactory extends Factory
             'lastName' => $this->faker->lastName,
             'grade_id' => rand(1,3),  
             'address' => $this->faker->address,
-            'number_phone' => $this->faker->phoneNumber,
+            'number_phone' => $this->faker->phoneNumber,    
             'date_of_birth' => $this->faker->date,
             'role_id' => 3,
             'image' => $userImage[rand(0, count($userImage) - 1)],

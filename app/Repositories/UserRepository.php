@@ -61,17 +61,25 @@ class UserRepository implements UserRepositoryInterface
 
     public function getAvailableStudents(int $classId)
     {
-        $students = User::where("role_id",3)->whereDoesntHave("classrooms", function ($query) use ($classId) {
-            $query->where('classrooms.id', $classId); 
+        $students = User::where("role_id", 3)->whereDoesntHave("classrooms", function ($query) use ($classId) {
+            $query->where('classrooms.id', $classId);
         })->get();
 
         return $students;
-        
+
     }
-    public function getStudentByClassroomId(int $id){
-        return User::where("role_id",3)->whereHas("classrooms", function ($query) use ($id) {
-            $query->where('classrooms.id', $id); 
-        })->get(); 
-    } 
- 
+    public function getStudentByClassroomId(int $id)
+    {
+        return User::where("role_id", 3)->whereHas("classrooms", function ($query) use ($id) {
+            $query->where('classrooms.id', $id);
+        })->get();
+    }
+    public function getStudentClassrooms()
+    {
+        $id = Auth::id();
+        $user = User::with('classrooms.grade', 'classrooms.promo', 'classrooms.teacher', 'classrooms.students')->find($id);
+        return $user;
+    }
+
+
 }

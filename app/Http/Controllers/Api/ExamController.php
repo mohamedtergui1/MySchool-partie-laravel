@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Exam;
 use Illuminate\Http\Request;
 use App\Repositories\ExamRepositoryInterface;
+
 class ExamController extends Controller
 {
     /**
@@ -14,7 +15,7 @@ class ExamController extends Controller
     private $repository;
     function __construct(ExamRepositoryInterface $repository)
     {
-        $this->repository = $repository; 
+        $this->repository = $repository;
     }
     public function index()
     {
@@ -35,7 +36,7 @@ class ExamController extends Controller
     public function store(Request $request)
     {
         //
-        return $this->success($this->repository->create($request->all()),"exam added with success");
+        return $this->success($this->repository->create($request->all()), "exam added with success");
     }
 
     /**
@@ -61,7 +62,7 @@ class ExamController extends Controller
     public function update(Request $request, int $exam)
     {
         //
-        return $this->success($this->repository->update($this->repository->getById($exam),$request->all()),"exam updates with success");
+        return $this->success($this->repository->update($this->repository->getById($exam), $request->all()), "exam updates with success");
 
     }
 
@@ -72,15 +73,42 @@ class ExamController extends Controller
     {
         //
         $this->repository->delete($this->repository->getById($exam));
-        return $this->success([],"exam deleted with success");
+        return $this->success([], "exam deleted with success");
     }
-    function classroomExams ($id){
+    function classroomExams($id)
+    {
         return $this->success($this->repository->getByClassId($id));
     }
 
-    function getClassExams($id){
+    function getClassExams($id)
+    {
         return $this->success($this->repository->getClassExams($id));
 
     }
+
+    function uploadExamPdf(Request $request, int $id)
+    {
+        if ($request->hasFile("exam_file")) {
+            $file = $request->file('exam_file');
+            $extension = $file->getClientOriginalExtension();
+            $fileName = time() . '.' . $extension;
+            $path = 'uploads/lessons/';
+
+
+            $exam = $this->repository->getById($id);
+
+            $oldImage = $exam->image ?? null;
+
+            $file->move($path, $fileName);
+
+            $exam = $this->repository->update($exam, ["image" => $fileName]);
+
+            if ($oldImage) {
+                $oldImagePath = $path . $oldImage;
+                if (file_exists($oldImagePath)) {
+                    unlink($oldImagePath);
+                }
+            }
+        }
+    }
 }
- 

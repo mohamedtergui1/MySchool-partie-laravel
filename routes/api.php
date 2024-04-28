@@ -60,14 +60,18 @@ Route::group(['middleware' => ['auth','role:admin']], function () {
         Route::get("/admin/getAvailableStudents/{id}", [StudentController::class, "getAvailableStudents"]);
         Route::put("/admin/syncStudents/{id}", [ClassroomController::class, "syncStudents"]);
         Route::get("/classrooms/lesson", [ClassroomController::class, "getClassroomsForLesson"]);
-        Route::get("/teacher/resultexam/{id}", [ResultController::class, "getResultExam"]);
-        Route::post("/teacher/updateResult", [ResultController::class, "setResultExam"]);  
         
     });
-    
+
+Route::group(['middleware' => ['auth']], function () {
+    Route::get('admin/annonces', [AnnonceController::class, 'index']);
+
+    Route::get('/student/classrooms',[StudentController::class,"getStudentClassrooms"]); 
+});
+        
     Route::group(['middleware' => ['auth', 'role:admin|teacher']], function () {
         
-        Route::apiResource("admin/annonces", AnnonceController::class);
+        Route::apiResource("admin/annonces", AnnonceController::class)->except("index");
         Route::apiResource("/teacher/exams", ExamController::class);
         Route::apiResource("/teacher/Lessons", LessonController::class);
         Route::put("/updateProfile", [ProfileController::class, "updateProfile"]);
@@ -76,6 +80,9 @@ Route::group(['middleware' => ['auth','role:admin']], function () {
         Route::get("/teacher/classroom/students/{id}",[StudentController::class,"classroomStudents"]);
         Route::get("/teacher/classroom/lessons/{id}", [LessonController::class, "classroomLessons"]);
         Route::get("/teacher/classroom/exams/{id}", [ExamController::class, "classroomExams"]);
+        Route::get("/teacher/examsClassroom/{id}", [ExamController::class, "getClassExams"]);
+        Route::get("/teacher/resultexam/{id}", [ResultController::class, "getResultExam"]);
+        Route::post("/teacher/updateResult", [ResultController::class, "setResultExam"]);  
         
     });
     // Route::group(['middleware' => ['auth','role.check:admin']], function () {

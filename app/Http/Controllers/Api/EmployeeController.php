@@ -9,13 +9,9 @@ use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Validator;
 
-class EmployeeController extends Controller
+class EmployeeController extends  UserController
 {
-    private $repository;
-    function __construct(UserRepositoryInterface $repository)
-    {
-        $this->repository = $repository;
-    }
+     
     public function index()
     {
         return $this->success($this->repository->paginate(10, [1, 2]));

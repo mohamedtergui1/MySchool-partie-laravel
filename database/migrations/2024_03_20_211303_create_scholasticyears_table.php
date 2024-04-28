@@ -14,8 +14,8 @@ return new class extends Migration
         Schema::create('scholasticyears', function (Blueprint $table) {
             $table->id();
             $table->foreignId("student_id")->constrained("users")->cascadeOnDelete();
-            $table->foreignId("classroom_id")->constrained("classrooms")->cascadeOnDelete();
-            $table->enum("fin_result", ["pass","redubl"])->default(null);
+            $table->bigInteger("classroom_id");
+            $table->enum("fin_result", ["pass","redubl","current"])->default("current");
             $table->timestamps();
         });
     }

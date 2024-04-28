@@ -11,12 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('classrooms', function (Blueprint $table) {
+        Schema::create('classrooms', function (Blueprint $table){
             $table->id();
             $table->string("name");
-            $table->foreignId("promo_id")->constrained("promos")->nullable()->default(1)->onDelete("set default")->onUpdate("cascade");
-            $table->foreignId("grade_id")->constrained("grades")->nullable()->default(1)->onDelete("set default")->onUpdate("cascade");
-            $table->foreignId("teacher_id")->constrained("users")->nullable()->default(1)->onDelete("set default")->onUpdate("cascade");
+            $table->bigInteger("promo_id");
+            $table->bigInteger("grade_id");
+            $table->bigInteger("teacher_id");
             $table->timestamps();
         });
     }

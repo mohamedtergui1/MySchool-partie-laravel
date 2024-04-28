@@ -2,26 +2,20 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Http\Controllers\Controller;
+ 
 use App\Http\Requests\StudentRequest;
 
-use App\Repositories\UserRepositoryInterface;
-use App\Models\User;
+ 
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Validator;
 
-class StudentController extends Controller
+class StudentController extends UserController
 {
-
-    private $repository;
-    function __construct(UserRepositoryInterface $repository)
-    {
-        $this->repository = $repository;
-    }
+ 
     public function index()
     {
-
+ 
         return $this->success($this->repository->paginate(10, [3]));
 
     }
@@ -48,11 +42,6 @@ class StudentController extends Controller
 
     public function update(Request $request, int $user)
     {
-
-
-
-
-
         $user = $this->repository->getById($user);
         $validator = Validator::make($request->all(), [
             'username' => 'required|string|max:100',
@@ -137,11 +126,13 @@ class StudentController extends Controller
 
     }
  
- 
     function classroomStudents(int $id){
         return $this->success($this->repository->getStudentByClassroomId($id));
     }
 
+    function getStudentClassrooms(){
+        return $this->success($this->repository->getStudentClassrooms());
+    }
 
 }
 

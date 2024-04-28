@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\LessonRequest;
 use App\Models\Lesson;
 use App\Repositories\LessonRepositoryInterface;
+use Illuminate\Support\Facades\Request;
 
 
 class LessonController extends Controller
@@ -92,5 +93,30 @@ class LessonController extends Controller
     function classroomLessons(int $id){
 
         return $this->success($this->repository->getByClassId($id));
+    }
+    function uploadExamPdf(Request $request, int $id)
+    {
+        if ($request->hasFile("course_file")) {
+            $file = $request->file('course_file');
+            $extension = $file->getClientOriginalExtension();
+            $fileName = time() . '.' . $extension;
+            $path = 'uploads/lessons/';
+
+
+            $lesson = $this->repository->getById($id);
+
+            $oldImage = $lesson->image ?? null;
+
+            $file->move($path, $fileName);
+
+            $lesson = $this->repository->update($lesson, ["image" => $fileName]);
+
+            if ($oldImage) {
+                $oldImagePath = $path . $oldImage;
+                if (file_exists($oldImagePath)) {
+                    unlink($oldImagePath);
+                }
+            }
+        }
     }
 }
