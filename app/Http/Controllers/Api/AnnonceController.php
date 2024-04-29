@@ -7,6 +7,8 @@ use App\Models\Annonce;
 use Illuminate\Http\Request;
 use App\Repositories\AnnonceRepositoryInterface;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Requests\AnnonceRequest;
+use App\Http\Requests\UpdateAnnonceRequest;
 
 class AnnonceController extends Controller
 {
@@ -35,7 +37,7 @@ class AnnonceController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(AnnonceRequest $request)
     {
         $all = $request->all() +["user_id"=>Auth::id()];
         return  $this->success($this->repository->create($all)) ;
@@ -60,7 +62,7 @@ class AnnonceController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Annonce $annonce)
+    public function update(UpdateAnnonceRequest $request, Annonce $annonce)
     {
         //
         $user = Auth::user();

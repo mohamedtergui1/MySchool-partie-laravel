@@ -21,6 +21,8 @@ interface UserRepositoryInterface
     public function getAvailableStudents(int $classId);
     public function getStudentByClassroomId(int $id);
 
+    public function search( array $request);
+
     public function getStudentClassrooms();
 
 }

@@ -134,5 +134,11 @@ class StudentController extends UserController
         return $this->success($this->repository->getStudentClassrooms());
     }
 
+
+    function search(Request $request){
+        $all = $request->all();
+        return $this->success($this->repository->search($all));
+    }
+
 }
 

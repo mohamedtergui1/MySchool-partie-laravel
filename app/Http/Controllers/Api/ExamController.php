@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Models\Exam;
 use Illuminate\Http\Request;
 use App\Repositories\ExamRepositoryInterface;
+use App\Http\Requests\ExamRequest;
+use App\Http\Requests\UpdateExamRequest;
 
 class ExamController extends Controller
 {
@@ -33,7 +35,7 @@ class ExamController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(ExamRequest $request)
     {
         //
         return $this->success($this->repository->create($request->all()), "exam added with success");
@@ -59,7 +61,7 @@ class ExamController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, int $exam)
+    public function update(UpdateExamRequest $request, int $exam)
     {
         //
         return $this->success($this->repository->update($this->repository->getById($exam), $request->all()), "exam updates with success");
@@ -83,7 +85,6 @@ class ExamController extends Controller
     function getClassExams($id)
     {
         return $this->success($this->repository->getClassExams($id));
-
     }
 
     function uploadExamPdf(Request $request, int $id)
@@ -110,5 +111,10 @@ class ExamController extends Controller
                 }
             }
         }
+    }
+
+
+    function getExamsClassroomStudent($id){
+        return $this->success($this->repository->getExamsClassroomStudent($id)) ;
     }
 }

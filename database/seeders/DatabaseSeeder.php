@@ -52,7 +52,7 @@ class DatabaseSeeder extends Seeder
             User::create([
                 'username' => 'admin',
                 'email' => 'admin@admin.com',
-                'password' => Hash::make('password'),
+                'password' => Hash::make('myschool'),
                 'firstName' => 'AdminFirstName',
                 'lastName' => 'AdminLastName',
                 'grade_id' => 1,
@@ -65,7 +65,7 @@ class DatabaseSeeder extends Seeder
             User::create([
                 'username' => 'teacher',
                 'email' => 'teacher@teacher.com',
-                'password' => Hash::make('password'),
+                'password' => Hash::make('myschool'),
                 'firstName' => 'teacherFirstName',
                 'lastName' => 'teacherLastName',
                 'grade_id' => 1,
@@ -74,9 +74,6 @@ class DatabaseSeeder extends Seeder
                 'date_of_birth' => now(),
                 'role_id' => 2
             ]);
-
-
-
 
 
 

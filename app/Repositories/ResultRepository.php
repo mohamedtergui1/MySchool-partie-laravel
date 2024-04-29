@@ -3,6 +3,7 @@
 namespace App\Repositories;
 
 use App\Models\Result;
+use Illuminate\Support\Facades\Auth;
 
 
 class ResultRepository implements ResultRepositoryInterface
@@ -16,7 +17,7 @@ class ResultRepository implements ResultRepositoryInterface
     public function update(Result $Result, array $data)
     {
         $Result->update($data);
-        return $Result; 
+        return $Result;
     }
     public function delete(Result $Result)
     {
@@ -34,9 +35,19 @@ class ResultRepository implements ResultRepositoryInterface
     {
         return Result::latest()->paginate($Nrows);
     }
-    public function getResultExam(int $idExam){
+    public function getResultExam(int $idExam)
+    {
         return Result::with("student")->whereHas("exam", function ($query) use ($idExam) {
             $query->where('exams.id', $idExam);
+        })->get();
+    }
+
+
+    public function getAllResultsClassroom(int $id)
+    {
+        $id_user = Auth::id();
+        return Result::with("exam")->where("student_id", $id_user)->whereHas("exam", function ($query) use ($id) {
+            return $query->Where("classroom_id", $id)->where("corrected",true);
         })->get();
     }
 

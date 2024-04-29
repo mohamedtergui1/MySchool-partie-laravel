@@ -10,15 +10,9 @@ trait  ResponseHelper{
             "message" => $message
         ], $status );
     }
-    function failed(array $errors =[] , string $message = '' , int  $status  = 400)
+    function failed(array $errors =[]   , int  $status  = 400)
     {
-        return response()->json([
-            "status" => false
-            ,
-            "errors" => $errors
-            ,
-            "message" => $message
-        ] , $status);
+        return response()->json($errors, 422);
     }
 } 
 

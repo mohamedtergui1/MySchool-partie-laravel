@@ -21,4 +21,6 @@ interface ResultRepositoryInterface
     public function getResultExam(int $idExam);
 
 
+    public function getAllResultsClassroom(int $id);
+
 }

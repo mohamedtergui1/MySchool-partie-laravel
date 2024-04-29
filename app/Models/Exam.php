@@ -11,7 +11,8 @@ class Exam extends Model
     protected $fillable = [
         "title",
         "date",
-        "classroom_id"
+        "classroom_id",
+        "corrected"
     ];
     function classroom()
     {

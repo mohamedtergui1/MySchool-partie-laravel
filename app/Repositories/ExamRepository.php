@@ -50,5 +50,10 @@ class ExamRepository implements ExamRepositoryInterface
     public function getClassExams($id){
         return Exam::with("results.student")->where("classroom_id",$id)->get();
     }
+
+    public function getExamsClassroomStudent(int $id){
+        return Exam::where("classroom_id", $id)->get();
+    }
+     
      
 }

@@ -82,4 +82,26 @@ class UserRepository implements UserRepositoryInterface
     }
 
 
+    public function search(array $request)
+    {
+
+        $query = User::with("grade")
+            ->where(function ($query) use ($request) {
+                $query->where("firstName", 'like', '%' . $request['name'] . '%')
+                    ->orWhere("lastName", "like", '%' . $request['name'] . '%');
+            })->where("role_id", 3);
+
+        if ($request["grade"]) {
+            $query->Where("grade_id", $request["grade"]);
+        }
+
+        if ($request["genre"]) {
+            $query->Where("genre", $request["genre"]);
+        }
+
+        return $query->paginate(10);
+    }
+
+
+
 }
